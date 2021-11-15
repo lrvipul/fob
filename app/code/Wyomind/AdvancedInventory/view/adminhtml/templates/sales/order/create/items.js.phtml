@@ -1,0 +1,25 @@
+<!--
+Copyright © 2016 Wyomind. All rights reserved.
+See LICENSE.txt for license details.
+-->
+
+<script>
+
+
+    var AIQuoteItems = {};
+    require(["jquery"], function ($) {
+        $(function () {
+
+            AIQuoteItems = {
+                multiAssignationEnabled : <?php echo $block->isMultiAssignationEnabled()?"true":"false"; ?>
+            };
+
+            $(document).on("change", ".pre_assignation", function () {
+                if (!AIQuoteItems.multiAssignationEnabled) {
+                    $('.pre_assignation').val($(this).val());
+                }
+            });
+        });
+    });
+
+</script>

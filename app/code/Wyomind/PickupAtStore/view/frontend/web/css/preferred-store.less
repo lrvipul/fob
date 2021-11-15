@@ -1,0 +1,77 @@
+div.preferred-store-widget {
+  span.preferred-store-label {
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  span.preferred-store-selected {
+
+  }
+  div.find-a-store {
+    display: inline-block;
+    margin-left: 20px;
+  }
+}
+
+div.preferred-store-popup {
+  display: none;
+  &.preferred-store-loading {
+    background: url("../images/loader.gif");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    min-height: 200px;
+  }
+}
+
+#map_canvas_pointofsale {
+  span.preferred {
+    color: brown;
+  }
+}
+
+#preferred-store-popup {
+  a.select-store {
+    display: block;
+    float: left;
+    background: #1979c3;
+    border: solid 1px #1979c3;
+    border-radius: 3px;
+    padding: 7px 15px;
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-decoration: none;
+    margin-top: 5px;
+  }
+
+  &._list {
+    #map_canvas_pointofsale {
+      display: none;
+    }
+    #pointofsale {
+      width: 100%;
+    }
+    #show-my-location {
+      display: none;
+    }
+  }
+  &._gmap {
+    #map_canvas_pointofsale {
+      width: 100%;
+    }
+    #pointofsale {
+      display: none;
+    }
+  }
+  &._none {
+    #map_canvas_pointofsale {
+      display: none;
+    }
+    #pointofsale {
+      display: none;
+    }
+    #show-my-location {
+      display: none;
+    }
+  }
+}

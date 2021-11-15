@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    
+    <preference for="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" type="Wyomind\AdvancedInventory\Model\StockRepository"/>
+    
+    <type name="Magento\Framework\App\Rss\RssManagerInterface">
+        <arguments>
+            <argument name="dataProviders" xsi:type="array">
+                <item name="ai_rss_feed" xsi:type="string">Wyomind\AdvancedInventory\Block\Rss\Feed</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\CatalogInventory\Model\StockStateProvider">
+        <plugin name="Wyomind_AdvancedInventory_Model_CatalogInventory_StockStateProvider" type="Wyomind\AdvancedInventory\Model\CatalogInventory\StockStateProvider" sortOrder="1"/>
+    </type>
+    
+    <type name="Wyomind\AdvancedInventory\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">AI</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="notice" xsi:type="object">Wyomind\AdvancedInventory\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\CatalogInventory\Block\Stockqty\AbstractStockqty">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_Stockqty_DefaultStockqty" type="Wyomind\AdvancedInventory\Plugin\Stockqty\DefaultStockqty" sortOrder="1"/>
+    </type>
+
+    <!--<preference for="Magento\Paypal\Model\Ipn" type="Wyomind\AdvancedInventory\Model\Ipn" />-->
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="ai_sales_order_invoice_grid_data_source" xsi:type="string">Wyomind\AdvancedInventory\Model\ResourceModel\Order\Invoice\Grid\Collection</item>
+                <item name="ai_sales_order_shipment_grid_data_source" xsi:type="string">Wyomind\AdvancedInventory\Model\ResourceModel\Order\Shipment\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+
+
+    <type name="Wyomind\AdvancedInventory\Controller\Adminhtml\Journal">
+        <arguments>
+            <argument name="journalModel" xsi:type="object">Wyomind\AdvancedInventory\Model\Journal\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Controller\Adminhtml\Assignation">
+        <arguments>
+            <argument name="helperData" xsi:type="object">Wyomind\AdvancedInventory\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Controller\Adminhtml\Permissions">
+        <arguments>
+            <argument name="helperData" xsi:type="object">Wyomind\AdvancedInventory\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Controller\Adminhtml\Journal\ExportCsv">
+        <arguments>
+            <argument name="journalModel" xsi:type="object">Wyomind\AdvancedInventory\Model\Journal\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Controller\Adminhtml\Journal\Purge">
+        <arguments>
+            <argument name="journalModel" xsi:type="object">Wyomind\AdvancedInventory\Model\Journal\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Controller\Adminhtml\Stocks">
+        <arguments>
+            <argument name="stockModel" xsi:type="object">Wyomind\AdvancedInventory\Model\Stock\Proxy</argument>
+            <argument name="journalHelper" xsi:type="object">Wyomind\AdvancedInventory\Helper\Journal\Proxy</argument>
+            <argument name="permissionsHelper" xsi:type="object">Wyomind\AdvancedInventory\Helper\Permissions\Proxy</argument>
+            <argument name="helperData" xsi:type="object">Wyomind\AdvancedInventory\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Plugin\Catalog\Controller\Adminhtml\Catalog\Product\Save">
+        <arguments>
+            <argument name="stockModel" xsi:type="object">Wyomind\AdvancedInventory\Model\Stock\Proxy</argument>
+            <argument name="journalHelper" xsi:type="object">Wyomind\AdvancedInventory\Helper\Journal\Proxy</argument>
+            <argument name="stockHelper" xsi:type="object">Wyomind\AdvancedInventory\Helper\Stock\Proxy</argument>
+            <argument name="cacheHelper" xsi:type="object">Wyomind\AdvancedInventory\Helper\Cache\Proxy</argument>
+            <argument name="permissionsHelper" xsi:type="object">Wyomind\AdvancedInventory\Helper\Permissions\Proxy</argument>
+            <argument name="helperData" xsi:type="object">Wyomind\AdvancedInventory\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\AdvancedInventory\Plugin\PointOfSale\Controller\Adminhtml\Manage\Save">
+        <arguments>
+            <argument name="journalHelper" xsi:type="object">Wyomind\AdvancedInventory\Helper\Journal\Proxy</argument>
+            <argument name="helperData" xsi:type="object">Wyomind\AdvancedInventory\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
+
+</config>

@@ -1,0 +1,69 @@
+<?php $helperData = $this->helper('Magecomp\Recaptcha\Helper\Data'); ?>
+<div id="registration" data-bind="scope:'registration'" class="custom">
+    <br/>
+    <div class="captcha" style="margin:10px 0px">
+        <div class="g-recaptcha-response" id="g-recaptcha-chk_register"
+             data-theme="<?php echo $helperData->getThemeOption1(); ?>"
+             data-sitekey="<?php echo $helperData->getSiteKey(); ?>"></div>
+        <div id="g_recaptcha-error" style="display: none; color: #e02b27; font-size: 1.2rem;" generated="true">
+            <?php echo __('This is a required field.') ?>
+        </div>
+    </div>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#registration": {
+                "Magento_Ui/js/core/app": {
+                   "components": {
+                        "registration": {
+                            "component": "Magecomp_Recaptcha/js/view/registration",
+                            "config": {
+                                "registrationUrl":
+                                    "javascript:recaptchaddfunction();",
+                                "email": "<?= $block->escapeJs($block->getEmailAddress()) ?>"
+                            },
+                            "children": {
+                                "errors": {
+                                    "component": "Magento_Ui/js/view/messages",
+                                    "sortOrder": 0,
+                                    "displayArea": "messages",
+                                    "config": {
+                                        "autoHideTimeOut": -1
+                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+        <script src='https://www.google.com/recaptcha/api.js?onload=reCaptchaCallbackGeneral&render=explicit&hl=<?php echo $helperData->getLocal(); ?>'></script>
+
+    <script type="text/javascript">
+        require(['jquery', 'jquery/ui'], function($){
+        });
+        var regSubmit = false;
+        function reCaptchaVerifyGeneral(response) {
+            if (response) {
+                regSubmit = true;
+            }
+        }
+        function recaptchaddfunction() {
+            if (!regSubmit) {
+                jQuery('#g_recaptcha-error').show();
+            } else {
+                window.location = "<?= $block->escapeJs($block->escapeUrl($block->getCreateAccountUrl())) ?>";
+            }
+        }
+        function reCaptchaCallbackGeneral() {
+            grecaptcha.render('g-recaptcha-chk_register', {
+                'sitekey': '<?php echo $helperData->getSiteKey(); ?>',
+                'callback': reCaptchaVerifyGeneral,
+                'theme': '<?php echo $helperData->getThemeOption1(); ?>'
+            });
+        }
+
+    </script>
+</div>

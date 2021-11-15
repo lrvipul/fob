@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+                id="Wyomind_PickupAtStore::main"
+                title="Store Pickup"
+                module="Wyomind_PickupAtStore"
+                sortOrder="100000"
+                parent="Magento_Sales::sales"
+                resource="Wyomind_PickupAtStore::main"/>
+        <add
+                id="Wyomind_PickupAtStore::calendar"
+                title="Calendar"
+                module="Wyomind_PickupAtStore"
+                sortOrder="1"
+                parent="Wyomind_PickupAtStore::main"
+                action="pickupatstore/calendar/index"
+                resource="Wyomind_PickupAtStore::calendar"/>
+    </menu>
+</config>

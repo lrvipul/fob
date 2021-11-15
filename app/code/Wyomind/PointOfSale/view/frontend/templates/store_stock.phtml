@@ -1,0 +1,24 @@
+
+<?php $current_product = $block->getCurrentProduct(); ?>
+<?php $storeStocksData =  $block->getStoreWiseStock($current_product); ?>
+
+<?php if(count($storeStocksData) >0):?>
+<div class="store-product-qty">
+	<h2> <?= __("Available for store pickup") ?></h2>
+	<div class="store-instock">
+		<h3><?= __("Choose your store") ?></h3>
+		<?php foreach ($storeStocksData as $storeData):?>
+			<?php if($storeData['is_in_stock'] == "IN STOCK"):?>
+				<?php $stockStatus = "instock";?>
+			<?php elseif($storeData['is_in_stock'] == "OUT OF STOCK"):?>
+				<?php $stockStatus = "outofstock";?>
+			<?php else:?>
+				<?php $stockStatus = "";?>
+			<?php endif;?>
+		<div class="store-item <?php echo $stockStatus;?>"> 
+			<span class="label"> <?= __($storeData['name']) ?></span> <span class="content"><span class="qty"><?= __($storeData['quantity']) ?></span><br><?= __($storeData['is_in_stock']) ?></span>
+		</div>
+		<?php endforeach; ?>
+	</div>
+</div>
+<?php endif; ?>

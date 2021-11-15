@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Store/etc/config.xsd">
+    <default>
+        <aitoc_gifts>
+            <items>
+                <gift_name_postfix><![CDATA[$product-name - <b>(Gift Item)</b>]]></gift_name_postfix>
+            </items>
+        </aitoc_gifts>
+    </default>
+</config>

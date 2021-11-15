@@ -1,0 +1,32 @@
+<?php
+$helper = $this->helper('Wyomind\PointOfSale\Helper\Data');
+echo $helper->getGoogleMapsApiScript();
+?>
+
+<?php
+echo $block->getContent();
+?>
+
+<!-- Google Map -->
+<script>
+    if (document.getElementById("map_canvas_pointofsale")) {
+        var latlng = new google.maps.LatLng(<?php echo $block->getStoreLatitude(); ?>, <?php echo $block->getStoreLongitude(); ?>);
+        var options = {
+            zoom: 10,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas_pointofsale"), options);
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map
+        });
+        var infoWindow = new google.maps.InfoWindow();
+        infoWindow.setContent("<div style='width:400px'><?php echo $block->getStoreDescription(); ?><br><a target='_blank' href='//maps.google.com/maps?q=<?php echo $block->getStoreGoogleRequest(); ?>'><?php echo __("Show on Google Map"); ?></a></div>");
+        marker.addListener("click", function () {
+            infoWindow.open(map, marker);
+        });
+        infoWindow.open(map, marker);
+    }
+</script>
+<!-- /Google Map -->

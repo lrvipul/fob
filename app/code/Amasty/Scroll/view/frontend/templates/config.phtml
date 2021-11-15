@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
+ * @package Amasty_Scroll
+ */
+/**
+ * @var \Amasty\Scroll\Block\Init $block
+ */
+if ($block->isEnabled()) : ?>
+    <script>
+        require([
+            'jquery',
+            'amScrollScript'
+        ], function ($) {
+            var selector = '<?= $block->getProductsBlockSelector(); ?>';
+            if ($(selector).length) {
+                $(selector).amScrollScript(<?= $block->getConfig();?>);
+            } else {
+                console.error('Please note the Amasty Ajax Scroll extension has been configured incorrectly.'
+                    + ' Please configure the DOM-selectors settings in backend.');
+            }
+        });
+    </script>
+<?php endif; ?>

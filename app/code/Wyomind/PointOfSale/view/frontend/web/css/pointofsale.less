@@ -1,0 +1,298 @@
+/**
+ * Copyright © 2019 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+#tools,
+#map_canvas_pointofsale,
+#pointofsale {
+    box-sizing: border-box;
+}
+
+#pointofsale_box {
+    overflow: auto;
+    color: #333;
+    a.select-store {
+        display: block;
+        float: left;
+        background: #1979c3;
+        border: solid 1px #1979c3;
+        border-radius: 3px;
+        padding: 7px 15px;
+        color: #ffffff;
+        font-size: 1.4rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        text-decoration: none;
+        margin-top: 5px;
+    }
+
+    #map_canvas_pointofsale {
+        height: 400px;
+        width: 100%;
+        float: left;
+        margin-bottom: 20px;
+    }
+
+    #pointofsale {
+        width: 100%;
+        float: right;
+        .place {
+            &.preferred {
+                order: -1 !important;
+                .label {
+                    display: inline-block;
+                }
+                span.tools-buttons {
+                    display:none !important;
+                }
+            }
+
+            .label {
+                display: none;
+                color: brown;
+                font-size: 0.8em;
+            }
+
+            h3 {
+                margin: 0;
+            }
+
+            a {
+                &:hover {
+                    text-decoration: none;
+                }
+                display: block;
+                padding: 10px 0;
+                border-bottom: 1px solid #ccc;
+            }
+        }
+
+        #title {
+            font-weight: 300;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        #pointofsale_scroll {
+            height: 370px;
+            width: 100%;
+            overflow: auto;
+            display: flex;
+            flex-flow: column;
+            .distance {
+                float: right;
+            }
+            div.details {
+                margin-bottom: 10px;
+                span.tools-buttons {
+                    display: inline-block;
+                    background: #1979c3;
+                    border: solid 1px #1979c3;
+                    right: 3px;
+                    top: 5px;
+                    border-radius: 3px;
+                    padding: 7px 15px;
+                    color: #ffffff;
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    text-transform: capitalize;
+                    text-decoration: none;
+                    a {
+                        color: white !important;
+                        border: none;
+                        padding: 2px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#title #country_selection {
+    float: right;
+    select {
+        width: auto;
+    }
+}
+
+#tools {
+    margin: 0 0 5px;
+    width: auto;
+    font-size: 2rem;
+    overflow: auto;
+    .tools-buttons {
+        display: block;
+    }
+
+    a, button {
+        display: inline-block;
+        background: #1979c3;
+        border: solid 1px #1979c3;
+        border-radius: 3px;
+        padding: 7px 15px;
+        color: #ffffff;
+        font-size: 1.4rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        text-decoration: none;
+    }
+
+    .tools-new-location, .tools-address, span:first-child {
+        display: inline-block;
+    }
+
+    .tools-new-location, .tools-location {
+        padding-right: 5px;
+    }
+
+    .tools-address {
+        padding-bottom: 10px;
+    }
+
+    a {
+        &:first-child {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        &:hover {
+            background: #006bb4;
+            border: solid 1px #006bb4;
+        }
+    }
+
+    input {
+        background: none repeat scroll 0 0 #ffffff;
+        background-clip: padding-box;
+        margin-left: 0;
+        height: 32px;
+        padding: 0 9px;
+        width: auto;
+        border: solid 1px #c2c2c2;
+        line-height: 1.4;
+        font-size: 14px;
+        vertical-align: baseline;
+    }
+
+    button {
+        margin: 5px 0 0 0;
+        border-radius: 3px;
+        padding: 8px 15px;
+        box-shadow: none;
+    }
+
+    #searching {
+        background: url(../images/ajax-loader.gif) 100% 50% no-repeat;
+        padding-right: 30px;
+    }
+}
+
+#dirRendererBlock {
+    display: none;
+    direction: ltr;
+    margin-top: 20px;
+    #direction_title {
+        color: #575757;
+        margin: 0 0 5px;
+        overflow: auto;
+        h3 {
+            font-size: 2.2rem;
+            font-weight: 300;
+        }
+    }
+}
+
+@media screen and (min-width: 320px) {
+    #pointofsale_box #tools BUTTON {
+        margin: -1px 0 0 -1px;
+        border-radius: 0 3px 3px 0;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    #pointofsale_box #tools INPUT {
+        margin-left: 5px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #pointofsale_box {
+        #map_canvas_pointofsale, #pointofsale {
+            width: 49%;
+        }
+
+        #map_canvas_pointofsale {
+            margin-bottom: 0;
+        }
+
+        #tools {
+            .tools-buttons {
+                float: right;
+            }
+
+            span:first-child {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 319px) {
+    #pointofsale_box {
+        .hide-320 {
+            display: none;
+        }
+
+        #pointofsale {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 359px) {
+    #pointofsale_box {
+        .hide-360 {
+            display: none;
+        }
+
+        #pointofsale {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 399px) {
+    #pointofsale_box {
+        .hide-400 {
+            display: none;
+        }
+
+        #pointofsale {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 599px) {
+    #pointofsale_box {
+        .hide-600 {
+            display: none;
+        }
+
+        #pointofsale {
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (max-width: 799px) {
+    #pointofsale_box {
+        .hide-800 {
+            display: none;
+        }
+
+        #pointofsale {
+            width: 100%
+        }
+    }
+}

@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'EE-Icons';
+    src: url(EE-Icons.ttf);
+}
+
+.ai-tooltip {
+    font-size: 1.5em;
+    float: right;
+    &:after {
+        margin-right: 10px;
+        content: '\e623';
+        font-family: EE-Icons;
+        float: right;
+    }
+}
+
+@tooltip-bg: #fff;
+@tooltip-border: #bbb;
+@tooltip-corner-size: 6px;
+.lite-tooltip {
+    opacity: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 9999;
+    background-color: @tooltip-bg;
+    padding: 1.4rem 2rem;
+    border-radius: 3px;
+    border: 1px solid @tooltip-border;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -ms-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+    -webkit-box-shadow: 0 0 5px #aaa;
+    box-shadow: 0 0 5px #aaa;
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: auto;
+        left: auto;
+        right: -@tooltip-corner-size;
+        top: 60%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: @tooltip-corner-size @tooltip-corner-size 0 @tooltip-corner-size;
+        border-color: transparent transparent transparent;
+        display: inline-block;
+    }
+}

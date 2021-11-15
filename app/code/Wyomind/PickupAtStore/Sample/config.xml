@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © 2019 Wyomind. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<!-- configuration file used for the Wyomind's demo store: https://demo2.wyomind.com -->
+<config>
+    <login>PickupAtStore</login>
+    <password>PickupAtStore123</password>
+    <acl>
+        Magento_Sales::sales
+        Magento_Sales::sales_invoice
+        Magento_Sales::shipment
+        Magento_Sales::sales_creditmemo
+        Magento_Sales::sales_operation
+        Magento_Sales::sales_order
+        Magento_Sales::action
+        Magento_Sales::actions_view
+        Wyomind_PickupAtStore::main
+        Wyomind_PickupAtStore::calendar
+        Wyomind_PointOfSale::main
+        Wyomind_PointOfSale::pos
+        {{system/config}}
+        Wyomind_PickupAtStore::pickupatstore_config
+        Magento_Shipping::carriers
+        Magento_Backend::content
+        Magento_Backend::content_elements
+        Magento_Widget::widget_instance
+    </acl>
+    <scenarii>
+        <scenario type="frontend" id="pointofsale">
+            <label>Store Locator</label>
+            <comment><![CDATA[See the store locator in action]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">pointofsale</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="frontend" id="preferred-store">
+            <label>Preferred Store</label>
+            <comment><![CDATA[Select a preferred store]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">/</param>
+                </action>
+                <action type="script">
+                    <param name="content"><![CDATA[
+                        require(['jquery'], function ($) {
+                            if ($('.find-a-store').find('.action.primary.disabled').hasClass('disable')) {
+                                $(document).on('preferred-store-loaded', function() {
+                                    $('.find-a-store').trigger('click');
+                                });
+                            } else {
+                                $('.find-a-store').trigger('click');
+                            }
+                        });
+                    ]]></param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="frontend" id="checkout" default="1">
+            <label>Checkout</label>
+            <comment><![CDATA[See how the customer can pickup his order in store]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">checkout/index/index</param>
+                </action>
+                <action type="empty-cart"/>
+                <action type="add-to-cart">
+                    <param name="sku">24-UB02</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="backend" id="pointofsale_grid">
+            <label>Manage Points Of Sale</label>
+            <comment><![CDATA[See how to configure the points of sale]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">pointofsale/manage/index</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="backend" id="carriers">
+            <label>Shipping method configuration</label>
+            <comment><![CDATA[Check out the options available for the Pickup At Store shipping method]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">Magento_Shipping::carriers</param>
+                </action>
+            </actions>
+        </scenario>
+    </scenarii>
+</config>

@@ -1,0 +1,107 @@
+<?php
+/** @var \Wyomind\PickupAtStore\Block\Adminhtml\Calendar $block */
+?>
+
+
+<div id='calendar' style="height:500px"></div>
+
+<script>
+
+    require([
+            'jquery',
+            'moment',
+            '@fullcalendar/core',
+            '@fullcalendar/interaction',
+            '@fullcalendar/daygrid',
+            '@fullcalendar/list',
+            '@fullcalendar/timegrid'
+        ],
+        function (
+            $,
+            moment,
+            FullCalendar,
+            FullCalendarInteraction,
+            FullCalendarDayGrid,
+            FullCalendarList,
+            FullCalendarTimeGrid
+        ) {
+
+            window.FullCalendar = FullCalendar;
+            window.FullCalendarInteraction = FullCalendarInteraction;
+            window.FullCalendarDayGrid = FullCalendarDayGrid;
+            window.FullCalendarTimeGrid = FullCalendarTimeGrid;
+            window.FullCalendarList = FullCalendarList;
+
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['interaction', 'dayGrid', 'timeGrid'],
+                contentHeight: 600,
+                //header: {center: 'timeGridDay,timeGridWeek,dayGridMonth'},
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'timeGridDay,timeGridWeek,dayGridMonth'
+                },
+                defaultView: 'timeGridWeek', //resourceTimelineWeek',
+                resources: [
+                    // your resource list
+                ],
+                views: {
+                    timeGrid: {
+                        default: '00:30:00'
+                    }
+                },
+                eventTimeFormat: { // like '14:30:00'
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                },
+                displayEventEnd: true,
+                nowIndicator: true,
+                eventSources: [
+                    {
+                        url: "<?= /* @noEscape */ $block->getUrl('pickupatstore/calendar/events') ?>"
+                    }
+                ],
+                themeSystem: 'united',
+                firstDay: 1,
+                eventLimit: 2,
+                eventRender: function (info) {
+                    $('.legend-source').each(function (cl) {
+                        if ($(this).hasClass('disabled') && $(info.el).hasClass($(this).attr('source'))) {
+                            $(info.el).css({'display': 'none'});
+                        }
+                        $(info.el).html($(info.el).html().replace("INCREMENT_ID", "<a target='_blank' href='"+info.event.extendedProps.order_url+"'>#" + info.event.extendedProps.increment_id + "</a>"))
+                        $(info.el).attr('title', info.event.extendedProps.description);
+                        $(info.el).tooltip();
+                    });
+                },
+
+            });
+
+            calendar.render();
+
+            let legend = "<div id='legend'>"
+                <?php foreach ($block->getPosLegend() as $source => $info) : ?>
+                + "<span class='legend-source' source='<?= $source ?>' style='border:1px solid <?= $info['color'] ?>;background:<?= $info['color'] ?>'><?php echo $info['label'] ?></span>"
+                <?php endforeach; ?>
+                + "</div>";
+
+            $('.fc-toolbar.fc-header-toolbar').after(legend);
+
+            $(document).on('click', '.legend-source', function () {
+                let source = $(this).attr('source');
+                if (!$(this).hasClass('disabled')) {
+                    $(this).addClass('disabled');
+                    $('.' + source).css({'display': 'none'});
+                } else {
+                    $(this).removeClass('disabled');
+                    $('.' + source).css({'display': 'block'});
+                }
+            });
+
+        });
+
+</script>

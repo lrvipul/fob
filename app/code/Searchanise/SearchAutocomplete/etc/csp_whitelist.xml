@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <!-- Searchanise style hosts -->
+        <policy id="style-src">
+            <values>
+                <value id="searchanise_cdn" type="host">searchanise-ef84.kxcdn.com</value>
+                <value id="searchanise_amazon_s3" type="host">s3.amazonaws.com</value>
+            </values>
+        </policy>
+        <!-- Searchanise js hosts -->
+        <policy id="script-src">
+            <values>
+                <value id="searchanise_cdn" type="host">searchanise-ef84.kxcdn.com</value>
+                <value id="searchanise_amazon_s3" type="host">s3.amazonaws.com</value>
+                <value id="searchanise_jquery" type="host">ajax.aspnetcdn.com</value>
+                <value id="searchanise_main" type="host">www.searchanise.com</value>
+                <value id="searchanise_static" type="host">static.searchanise.com</value>
+            </values>
+        </policy>
+        <!-- Alows data: images -->
+        <policy id="img-src">
+            <values>
+                <value id="se_data" type="host">data:</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

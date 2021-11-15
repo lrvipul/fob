@@ -1,0 +1,101 @@
+"Pickup At Store","Pickup At Store"
+"Pickup Fee","Pickup Fee"
+Today,Today
+"Billing Address","Billing Address"
+"Unable to save shipping information. Please check input data.","Unable to save shipping information. Please check input data."
+"Your pickup time: ","Your pickup time: "
+"Your pickup date: ","Your pickup date: "
+Monday,Monday
+Tuesday,Tuesday
+Wednesday,Wednesday
+Thursday,Thursday
+Friday,Friday
+Saturday,Saturday
+Sunday,Sunday
+Mon,Mon
+Tue,Tue
+Wed,Wed
+Thu,Thu
+Fri,Fri
+Sat,Sat
+Sun,Sun
+January,January
+Februar,Februar
+March,March
+April,April
+May,May
+June,June
+July,July
+August,August
+September,September
+October,October
+November,November
+December,December
+Jan,Jan
+Feb,Feb
+Mar,Mar
+Apr,Apr
+Jun,Jun
+Jul,Jul
+Aug,Aug
+Sep,Sep
+Oct,Oct
+Nov,Nov
+Dec,Dec
+"Shipping &amp; Handling Information","Shipping &amp; Handling Information"
+"Track Order","Track Order"
+"Incl. Tax","Incl. Tax"
+"No shipping information available","No shipping information available"
+Yes,Yes
+No,No
+"Select a point of sale","Select a point of sale"
+"Preferred day","Preferred day"
+"Select an hour","Select an hour"
+"Please select a point of sale","Please select a point of sale"
+"My billing and shipping address are the same","My billing and shipping address are the same"
+Update,Update
+Cancel,Cancel
+"Ship To:","Ship To:"
+edit,edit
+"Shipping Method:","Shipping Method:"
+"Shipping Address","Shipping Address"
+"New Address","New Address"
+"Shipping Methods","Shipping Methods"
+"Select Method","Select Method"
+Price,Price
+"Method Title","Method Title"
+"Carrier Title","Carrier Title"
+Next,Next
+"Sorry, no quotes are available for this order at this time","Sorry, no quotes are available for this order at this time"
+"<span class='wyomind-logo'>Wyomind</span>","<span class='wyomind-logo'>Wyomind</span>"
+"License activation","License activation"
+"Extension version","Extension version"
+"Activation key","Activation key"
+"<span class=""notice"">Enter your activation key and click on `save config`.</span>","<span class=""notice"">Enter your activation key and click on `save config`.</span>"
+"Activation code","Activation code"
+"<span class=""notice"">Enter your license code <b>only if prompted<b>.</span>","<span class=""notice"">Enter your license code <b>only if prompted<b>.</span>"
+Enabled,Enabled
+Title,Title
+"Global handling fee","Global handling fee"
+"Sort Order","Sort Order"
+"Display Settings","Display Settings"
+"Store pickup activation title","Store pickup activation title"
+"Store pickup activated by default?","Store pickup activated by default?"
+"Shipping address title","Shipping address title"
+"Store choice title","Store choice title"
+"Ship to title","Ship to title"
+"Display a unique store pickup shipping method in the cart estimation","Display a unique store pickup shipping method in the cart estimation"
+"Display the locations in a dropdown","Display the locations in a dropdown"
+"Display the description of the locations","Display the description of the locations"
+"Display the Google Map ","Display the Google Map "
+"Allow the customer to choose the day to pickup the order","Allow the customer to choose the day to pickup the order"
+"Date Settings","Date Settings"
+"Allow pickup method ahead","Allow pickup method ahead"
+"Date format to display","Date format to display"
+"Allow the customer to choose the time to pickup the order","Allow the customer to choose the time to pickup the order"
+"Time Settings","Time Settings"
+"Pickup time range","Pickup time range"
+"Minimum time required to handle an order","Minimum time required to handle an order"
+"Time format to display","Time format to display"
+"Pickup Datetime","Pickup Datetime"
+"Store Pickup","Store Pickup"

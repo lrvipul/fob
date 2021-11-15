@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <pickupatstore>
+            <license>
+                <!-- required for License Manager -->
+                <extension_label>Pickup At Store</extension_label>
+                <extension_version>6.2.1</extension_version>
+                <extension_code>pas</extension_code>
+                <get_online_license>1</get_online_license>
+            <activation_key>JJ89DXB8XYZQ1535Y</activation_key></license>
+        </pickupatstore>
+        <carriers>
+            <pickupatstore>
+                <active>1</active>
+                <title>Store Pickup</title>
+                <model>Wyomind\PickupAtStore\Model\Carrier\PickupAtStore</model>
+                <handling_fee>0.00</handling_fee>
+                <sort_order>99</sort_order>
+                <backend>
+                    <display_only_title>0</display_only_title>
+                </backend>
+                <emails>
+                    <new_order>carriers_pickupatstore_emails_new_order</new_order>
+                    <new_order_guest>carriers_pickupatstore_emails_new_order_guest</new_order_guest>
+                </emails>
+                <settings>
+                    <store_pickup_activated_default>0</store_pickup_activated_default>
+                    <display_choice_block>1</display_choice_block>
+                    <estimate_global>0</estimate_global>
+                    <dropdown>1</dropdown>
+                    <display_description>1</display_description>
+                    <display_list>1</display_list>
+                    <use_gmap_api>
+                        <gmap>1</gmap>
+                    </use_gmap_api>
+                    <labels>
+                        <choice_title>Collect your order in store ?</choice_title>
+                        <shipping_address_title>Shipping Address</shipping_address_title>
+                        <pickupatstore_title>Choose your store</pickupatstore_title>
+                        <shipto_title>Ship to:</shipto_title>
+                    </labels>
+                    <date_settings>
+                        <date>1</date>
+                        <date_format>m/d/Y</date_format>
+                        <schedule_ahead>15</schedule_ahead>
+                    </date_settings>
+                    <time_settings>
+                        <time>1</time>
+                        <time_format>h:i A</time_format>
+                        <minimal_delay>60</minimal_delay>
+                        <minimal_delay_backorder>120</minimal_delay_backorder>
+                        <time_range>30</time_range>
+                    </time_settings>
+                </settings>
+            </pickupatstore>
+        </carriers>
+    </default>
+</config>

@@ -1,0 +1,82 @@
+div.pas-loader {
+  background: url('../images/loader.gif') 50% 50% no-repeat transparent;
+  height: 38px;
+  display: block;
+}
+
+div.pas-use, div.pas-select-pos {
+  margin-top: 28px !important;
+}
+
+#error-no-pos-selected {
+  display: none;
+}
+
+#pointofsale_box #pointofsale #pointofsale_scroll .distance,
+.table-checkout-shipping-method .distance {
+  float: initial !important;
+  display: block !important;
+  font-size: 0.7em !important;
+  margin-top: 5px !important;
+}
+
+#pointofsale_box #pointofsale #pointofsale_scroll {
+  span.pos-backorder {
+    font-size: 0.8em;
+    color: orange;
+  }
+  span.pos-in-stock {
+    font-size: 0.8em;
+    color: forestgreen;
+  }
+  span.pos-out-of-stock {
+    font-size: 0.8em;
+    color: red;
+  }
+
+  span.preferred {
+    color: brown;
+    font-size: 0.8em;
+  }
+}
+
+#pas-gmap {
+  &._list {
+    #map_canvas_pointofsale {
+      display: none !important;
+    }
+    #pointofsale {
+      width: 100% !important;
+    }
+    #show-my-location {
+      display: none !important;
+    }
+  }
+  &._gmap {
+    #map_canvas_pointofsale {
+      width: 100% !important;
+    }
+    #pointofsale {
+      display: none !important;
+    }
+  }
+  &._none {
+    #map_canvas_pointofsale {
+      display: none !important;
+    }
+    #pointofsale {
+      display: none !important;
+    }
+    #show-my-location {
+      display: none !important;
+    }
+  }
+}
+
+.table-checkout-shipping-method {
+  span.preferred {
+    color: brown;
+    float: right;
+  }
+}
+

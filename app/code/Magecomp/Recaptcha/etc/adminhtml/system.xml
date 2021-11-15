@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+        <tab id="magecomp" translate="label" sortOrder="100" class="magecomp-logo">
+            <label><![CDATA[]]></label>
+        </tab>
+        <section id="recaptcha" showInDefault="1">
+			<tab>magecomp</tab>
+            <label>Google Recaptcha</label>
+           	<resource>Magecomp_Recaptcha::recaptcha</resource>
+            <group id="general" showInDefault="1" sortOrder="10">
+                <label>Google Recaptcha Configuration Options</label>
+                <field id="enable" type="select" showInDefault="1" sortOrder="1" showInWebsite="1" showInStore="1">
+                    <label>Google Recaptcha</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="sitekey" type="text" showInDefault="1" sortOrder="2" showInWebsite="1" showInStore="1">
+                    <label>Site Key</label>
+					<validate>required-entry</validate>
+                    <depends>
+                        <field id="recaptcha/general/enable">1</field>
+                    </depends>
+				</field>
+                <field id="secretkey" type="text" showInDefault="1" sortOrder="3" showInWebsite="1" showInStore="1">
+                    <label>Secret Key</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="recaptcha/general/enable">1</field>
+                    </depends>
+                </field>
+			   <field id="theme" type="select" showInDefault="1" sortOrder="4" showInWebsite="1" showInStore="1">
+                    <label>Recaptcha Theme</label>
+					<source_model>Magecomp\Recaptcha\Model\Themesource</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+               </field>
+			   <field id="contactus" type="select" showInDefault="1" sortOrder="5" showInWebsite="1" showInStore="1">
+                    <label>Recaptcha On Contact Us</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+               </field>
+			   <field id="custreg" type="select" showInDefault="1" sortOrder="6" showInWebsite="1" showInStore="1">
+                    <label>Recaptcha On Customer Registration</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+               </field>
+          <field id="loginpage" type="select" showInDefault="1" sortOrder="7" showInWebsite="1" showInStore="1">
+                    <label>Recaptcha On Customer Login Page</label>
+          <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+               </field>      
+			   <field id="prodreview" type="select" showInDefault="1" sortOrder="8" showInWebsite="1" showInStore="1">
+                    <label>Recaptcha On  Product Review</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+               </field>
+			   <field id="forgotpassword" type="select" showInDefault="1" sortOrder="9" showInWebsite="1" showInStore="1">
+			   	<label>Recaptcha On Forgot Password Page</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+               </field>
+			   <field id="checkoutregister" type="select" showInDefault="1" sortOrder="10" showInWebsite="1" showInStore="1">
+                    <label>Recaptcha On Checkout Register Page</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+               </field>
+			   <field id="newsletter" type="select" showInDefault="1" sortOrder="11" showInWebsite="1" showInStore="1">
+                    <label>Recaptcha On Newsletter Subscription</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                   <depends>
+                       <field id="recaptcha/general/enable">1</field>
+                   </depends>
+					<comment><![CDATA[Its depends on you current theme]]></comment>
+               </field>
+		 </group>
+		</section>
+    </system>
+</config>

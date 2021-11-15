@@ -1,0 +1,15 @@
+<!-- <script src="https://cdn.rawgit.com/stevenmonson/googleReviews/6e8f0d79/google-places.js"></script> -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC4oSQ3TGXNrl8MEvFRlpNitk4BcM9Jl10&signed_in=true&libraries=places"></script>
+
+<script type="text/javascript">
+ require(["jquery","googleplace"],function($,googleplace){
+     $(document).ready(function(){
+       	$("#google-reviews").googlePlaces({
+		       placeId: 'ChIJ2_-DXpzGQkgRLgo2-AUxXys'
+		     , render: ['reviews']
+		     , min_rating: 4
+		     , max_rows:10
+		  });
+     })
+ })
+</script>

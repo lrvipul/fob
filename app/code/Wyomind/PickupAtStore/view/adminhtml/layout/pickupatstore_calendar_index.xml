@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © 2020 Wyomind. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Wyomind_PickupAtStore::css/fullcalendar/core/main.min.css"/>
+        <css src="Wyomind_PickupAtStore::css/fullcalendar/daygrid/main.min.css"/>
+        <css src="Wyomind_PickupAtStore::css/fullcalendar/timegrid/main.min.css"/>
+        <css src="Wyomind_PickupAtStore::css/calendar.css"/>
+    </head>
+    <body>
+        <referenceBlock name="content">
+            <block class="Wyomind\PickupAtStore\Block\Adminhtml\Calendar" template="Wyomind_PickupAtStore::calendar.phtml" name="pickupatstore.calendar" as="calendar"/>
+        </referenceBlock>
+    </body>
+</page>

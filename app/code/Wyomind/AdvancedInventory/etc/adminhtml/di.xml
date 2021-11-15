@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <!--
+     * Copyright © 2016 Wyomind. All rights reserved.
+     * See LICENSE.txt for license details.
+    -->
+
+    <type name="Magento\CatalogRule\Model\Rule\Condition\Combine">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_CatalogRule_Model_Rule_Condition_Combine"
+                type="Wyomind\AdvancedInventory\Plugin\CatalogRule\Model\Rule\Condition\Combine"
+                sortOrder="1"/>
+    </type>
+    <type name="Wyomind\PointOfSale\Controller\Adminhtml\Manage\Save">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_PointOfSale_Controller_Adminhtml_Manage_Save"
+                type="Wyomind\AdvancedInventory\Plugin\PointOfSale\Controller\Adminhtml\Manage\Save"
+                sortOrder="1"/>
+    </type>
+    <type name="Wyomind\PointOfSale\Block\Adminhtml\Manage\Grid">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_PointOfSale_Block_Adminhtml_Manage_Grid"
+                type="Wyomind\AdvancedInventory\Plugin\PointOfSale\Block\Adminhtml\Manage\Grid"
+                sortOrder="1"/>
+    </type>
+    <type name="Wyomind\PointOfSale\Block\Adminhtml\Manage">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_PointOfSale_Block_Adminhtml_Manage"
+                type="Wyomind\AdvancedInventory\Plugin\PointOfSale\Block\Adminhtml\Manage"
+                sortOrder="1"/>
+    </type>
+    <type name="Wyomind\PointOfSale\Model\PointOfSale">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_PointOfSale_Model_PointOfSale"
+                type="Wyomind\AdvancedInventory\Plugin\PointOfSale\Model\PointOfSale"
+                sortOrder="1"/>
+    </type>
+    <type name="Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Inventory">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_Catalog_Block_Adminhtml_Product_Edit_Tab_Inventory"
+                type="Wyomind\AdvancedInventory\Plugin\Catalog\Block\Adminhtml\Product\Edit\Tab\Inventory"
+                sortOrder="1"/>
+    </type>
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Save">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_Catalog_Controller_Adminhtml_Catalog_Product_Save"
+                type="Wyomind\AdvancedInventory\Plugin\Catalog\Controller\Adminhtml\Catalog\Product\Save"
+                sortOrder="1"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\Creditmemo\Create\Items">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_Sales_Block_Adminhtml_Order_Creditmemo_Create_Items"
+                type="Wyomind\AdvancedInventory\Plugin\Sales\Block\Adminhtml\Order\Creditmemo\Create\Items"
+                sortOrder="1"/>
+    </type>
+    <type name="Wyomind\Framework\Model\Notifications">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_Core_Model_Notifications"
+                type="Wyomind\AdvancedInventory\Plugin\Core\Model\Notifications"
+                sortOrder="1"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\Updater">
+        <plugin name="Wyomind_AdvancedInventory_Plugin_Quote_Model_Quote_Item_Updater"
+                type="Wyomind\AdvancedInventory\Plugin\Quote\Model\Quote\Item\Updater"
+                sortOrder="1"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin
+                name="Wyomind_AdvancedInventory_Plugin_Quote_Model_Quote_Item_ToOrderItem"
+                type="Wyomind\AdvancedInventory\Plugin\Quote\Model\Quote\Item\ToOrderItem"/>
+    </type>
+
+    <type name="Wyomind\AdvancedInventory\Helper\Assignation">
+        <arguments>
+            <argument name="sessionQuote" xsi:type="object">\Magento\Backend\Model\Session\Quote\Proxy</argument>
+        </arguments>
+    </type>
+
+
+</config>

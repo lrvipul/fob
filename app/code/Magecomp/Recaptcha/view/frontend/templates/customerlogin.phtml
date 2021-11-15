@@ -1,0 +1,67 @@
+<?php $helperData = $this->helper('Magecomp\Recaptcha\Helper\Data'); ?>
+<div class="block block-customer-login">
+    <div class="block-title">
+        <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Registered Customers')) ?></strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading">
+        <form class="form form-login"
+              action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
+              method="post"
+              id="login-form"
+              data-mage-init='{"validation":{}}'>
+            <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+                <div class="field note"><?= $block->escapeHtml(__('If you have an account, sign in with your email address.')) ?></div>
+                <div class="field email required">
+                    <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                    <div class="control">
+                        <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> id="email" type="email" class="input-text" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true, 'validate-email':true}">
+                    </div>
+                </div>
+                <div class="field password required">
+                    <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+                    <div class="control">
+                        <input name="login[password]" type="password" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> class="input-text" id="pass" title="<?= $block->escapeHtmlAttr(__('Password')) ?>" data-validate="{required:true}">
+                    </div>
+                </div>
+                <div class="captcha" style="margin:10px 0px">
+                    <div class="g-recaptcha-response-login" id="g-recaptcha-response-login"
+                         data-theme="<?php echo $helperData->getThemeOption1(); ?>"
+                         data-sitekey="<?php echo $helperData->getSiteKey(); ?>"></div>
+                    <div id="g_recaptcha-error-login" style="display: none; color: #e02b27; font-size: 1.2rem;"
+                         generated="true"> <?php echo __('This is a required field.') ?> </div>
+                </div>
+                <?= $block->getChildHtml('form_additional_info') ?>
+                <div class="actions-toolbar">
+                    <div class="primary"><button type="submit" class="action login primary" name="send" id="send2"><span><?= $block->escapeHtml(__('Sign In')) ?></span></button></div>
+                    <div class="secondary"><a class="action remind" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>"><span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span></a></div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<style type="text/css">.block.block-new-customer{float: right;}</style>
+<script src='https://www.google.com/recaptcha/api.js?onload=reCaptchaCallbackGeneral&render=explicit&hl=<?php echo $helperData->getLocal() ?>' async></script>
+
+<script type="text/javascript">
+    var loginSubmit = false;
+    function reCaptchaVerifyGeneral(response) {
+        if (response) {
+            loginSubmit = true;
+        }
+    }
+    function reCaptchaCallbackGeneral() {
+        grecaptcha.render('g-recaptcha-response-login', {
+            'sitekey': '<?php echo $helperData->getSiteKey(); ?>',
+            'callback': reCaptchaVerifyGeneral,
+            'theme': '<?php echo $helperData->getThemeOption1(); ?>'
+        });
+    }
+    document.forms['login-form'].addEventListener('submit',function(e){
+    if (!loginSubmit) {
+        jQuery('#g_recaptcha-error-login').show();
+        e.preventDefault();
+    }
+})
+</script>
+

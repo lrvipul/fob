@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright © 2019 Wyomind. All rights reserved.
+  See LICENSE.txt for license details.
+-->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">pointofsale_attributes_form.attributes_form_data_source</item>
+            <item name="deps" xsi:type="string">pointofsale_attributes_form.attributes_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Attribute</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">pointofsale_attributes_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Wyomind\PointOfSale\Block\Adminhtml\Attributes\Edit\BackButton</item>
+            <item name="save" xsi:type="string">Wyomind\PointOfSale\Block\Adminhtml\Attributes\Edit\SaveButton</item>
+            <item name="reset" xsi:type="string">Wyomind\PointOfSale\Block\Adminhtml\Attributes\Edit\ResetButton</item>
+            <item name="save_and_continue" xsi:type="string">Wyomind\PointOfSale\Block\Adminhtml\Attributes\Edit\SaveAndContinueButton</item>
+            <item name="delete" xsi:type="string">Wyomind\PointOfSale\Block\Adminhtml\Attributes\Edit\DeleteButton</item>
+        </item>
+    </argument>
+    <dataSource name="attributes_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Wyomind\PointOfSale\Model\Attributes\DataProvider</argument>
+            <argument name="name" xsi:type="string">attributes_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">attribute_id</argument>
+            <argument name="requestFieldName" xsi:type="string">attribute_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="pointofsale/attributes/save" />
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="attribute_settings">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Settings</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="attribute_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">attribute_id</item>
+                    <item name="source" xsi:type="string">attribute</item>
+                </item>
+            </argument>
+        </field>
+        <field name="code">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">12</item>
+                    <item name="label" xsi:type="string" translate="true">Code</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">code</item>
+                    <item name="source" xsi:type="string">attribute</item>
+                    <item name="disabled" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="label">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">Label</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">label</item>
+                    <item name="source" xsi:type="string">attribute</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">type</item>
+                    <item name="source" xsi:type="string">attribute</item>
+                </item>
+                <item name="options" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="value" xsi:type="number">0</item>
+                        <item name="label" xsi:type="string" translate="true">Textarea</item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="value" xsi:type="number">1</item>
+                        <item name="label" xsi:type="string" translate="true">Wysiwyg</item>
+                    </item>
+                    <item name="2" xsi:type="array">
+                        <item name="value" xsi:type="number">2</item>
+                        <item name="label" xsi:type="string" translate="true">Text</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <!--<field name="store_locator">-->
+            <!--<argument name="data" xsi:type="array">-->
+                <!--<item name="config" xsi:type="array">-->
+                    <!--<item name="sortOrder" xsi:type="number">50</item>-->
+                    <!--<item name="label" xsi:type="string" translate="true">Available in store locator</item>-->
+                    <!--<item name="dataType" xsi:type="string">boolean</item>-->
+                    <!--<item name="formElement" xsi:type="string">checkbox</item>-->
+                    <!--<item name="dataScope" xsi:type="string">store_locator</item>-->
+                    <!--<item name="source" xsi:type="string">attribute</item>-->
+                    <!--<item name="default" xsi:type="string">1</item>-->
+                    <!--<item name="prefer" xsi:type="string">toggle</item>-->
+                    <!--<item name="valueMap" xsi:type="array">-->
+                        <!--<item name="true" xsi:type="number">1</item>-->
+                        <!--<item name="false" xsi:type="number">0</item>-->
+                    <!--</item>-->
+                <!--</item>-->
+            <!--</argument>-->
+        <!--</field>-->
+        <!--<field name="store_page">-->
+            <!--<argument name="data" xsi:type="array">-->
+                <!--<item name="config" xsi:type="array">-->
+                    <!--<item name="sortOrder" xsi:type="number">60</item>-->
+                    <!--<item name="label" xsi:type="string" translate="true">Available in store page</item>-->
+                    <!--<item name="dataType" xsi:type="string">boolean</item>-->
+                    <!--<item name="formElement" xsi:type="string">checkbox</item>-->
+                    <!--<item name="dataScope" xsi:type="string">store_page</item>-->
+                    <!--<item name="source" xsi:type="string">attribute</item>-->
+                    <!--<item name="default" xsi:type="string">1</item>-->
+                    <!--<item name="prefer" xsi:type="string">toggle</item>-->
+                    <!--<item name="valueMap" xsi:type="array">-->
+                        <!--<item name="true" xsi:type="number">1</item>-->
+                        <!--<item name="false" xsi:type="number">0</item>-->
+                    <!--</item>-->
+                <!--</item>-->
+            <!--</argument>-->
+        <!--</field>-->
+    </fieldset>
+</form>

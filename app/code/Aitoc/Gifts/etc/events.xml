@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="salesrule_validator_process">
+        <observer name="aitoc_salesrule_validator_process" instance="Aitoc\Gifts\Observer\Salesrule\Discount" />
+    </event>
+    <event name="aitoc_gifts_product_add_to_cart">
+        <observer name="aitoc_gifts_product_add_to_cart_event" instance="Aitoc\Gifts\Observer\Quote\AddProduct" />
+    </event>
+    <event name="sales_quote_collect_totals_before">
+        <observer name="aitoc_gifts_sales_quote_collect_totals_before" instance="Aitoc\Gifts\Observer\Quote\CollectTotalsBefore" />
+    </event>
+    <event name="sales_quote_save_before">
+        <observer name="aitoc_sales_quote_save_before" instance="Aitoc\Gifts\Observer\QuoteSaveBefore" />
+    </event>
+    <event name="sales_quote_address_save_before">
+        <observer name="aitoc_sales_quote_address_save_before" instance="Aitoc\Gifts\Observer\QuoteSaveBefore" />
+    </event>
+    <event name="sales_quote_save_after">
+        <observer name="aitoc_sales_quote_save_after" instance="Aitoc\Gifts\Observer\QuoteSaveAfter" />
+    </event>
+    <event name="sales_quote_address_save_after">
+        <observer name="aitoc_sales_quote_address_save_after" instance="Aitoc\Gifts\Observer\QuoteSaveAfter" />
+    </event>
+</config>

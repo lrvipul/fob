@@ -1,0 +1,21 @@
+<div class="step-title" data-role="title">
+    <i class="fa fa-home"></i>
+    <span data-bind="i18n: 'Shipping Address'"><?php echo $block->getTitle(); ?></span>
+</div>
+<div class="group-content">
+    <div id="checkout-step-pas" class="pas-use step-content" data-role="content">
+        <div class="control">
+            <input type='radio'
+                   id="pas-yes" <?php if ($block->getStorePickupActivatedDefault() === "1") echo 'checked="checked"'; ?>
+                   onclick="PickupAtStore.showPickupAtStore(true);PickupAtStore.updateShippingMethod()" name='pickupatstore' value='1'/>
+            <label for="pas-yes"><span><?php echo __("Yes"); ?></span></label>
+        </div>
+        <div class="control">
+            <input type='radio'
+                   id="pas-no" <?php if ($block->getStorePickupActivatedDefault() !== "1") echo 'checked="checked"'; ?>
+                   onclick="PickupAtStore.showPickupAtStore(false);jQuery(jQuery('[name^=ko_unique_]')[0]).trigger('click');" name='pickupatstore' value='0'/>
+            <label for="pas-no"><span><?php echo __("No"); ?></span></label>
+        </div>
+    </div>
+</div>
+

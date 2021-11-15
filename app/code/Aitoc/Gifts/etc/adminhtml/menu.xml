@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Aitoc_Gifts::main" title="Promo Products by Aitoc" translate="title" module="Aitoc_Gifts" sortOrder="31" parent="Magento_Backend::marketing" resource="Aitoc_Gifts::main"/>
+        <add id="Aitoc_Gifts::promotions" action="aitoc_gifts/promotions/index" title="Promotional Rules" translate="title" module="Aitoc_Gifts" sortOrder="10" parent="Aitoc_Gifts::main" resource="Aitoc_Gifts::promotions"/>
+        <add id="Aitoc_Gifts::analytics" action="aitoc_gifts/promotions/total" title="Statistic" translate="title" module="Aitoc_Gifts" sortOrder="20" parent="Aitoc_Gifts::main" resource="Aitoc_Gifts::analytics"/>
+    </menu>
+</config>

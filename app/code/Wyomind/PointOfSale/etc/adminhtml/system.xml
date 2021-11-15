@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+ Copyright © 2019 Wyomind. All rights reserved.
+ See LICENSE.TXT for license details.
+-->
+<config>
+    <system>
+        <!-- master tab -->
+        <tab id="wyomind" translate="label" sortOrder="1000000" class='wyomind-logo'>
+            <label>Wyomind</label>
+        </tab>
+        <section id="pointofsale" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Point Of Sale</label>
+            <tab>wyomind</tab>
+            <resource>Wyomind_PointOfSale::pointofsale_config</resource>
+            <!-- License -->
+            <group id="license" translate="label" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>License</label>
+                <field id="extension_version" translate="label" type="label" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Extension version</label>
+                </field>
+                <field id="activation_key" translate="label comment" type="label" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Activation key</label>
+                    <frontend_model>Wyomind\Framework\Block\Adminhtml\System\Config\Form\Field\ActivationKey</frontend_model>
+                </field>
+                <field id="license_status" translate="label comment" type="label" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>License Status</label>
+                    <frontend_model>Wyomind\Framework\Block\Adminhtml\System\Config\Form\Field\LicenseStatus</frontend_model>
+                </field>
+            </group>
+            <group id="settings" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Settings</label>
+                 <field id="googleapi" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Google Api key</label>
+                    <comment><![CDATA[<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key">Get your Google api key</a>]]></comment>
+                </field>
+                <field id="display_x_first_pos" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number of POS to display according to the distance</label>
+                    <comment><![CDATA[Only when geolocation is on.<br/>0 means no limit.]]></comment>
+                </field>
+                <field id="display_distance" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display the distance from the customer location to the store in the store title</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="display_duration" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display the duration from the customer location to the store in the store title</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="unit_system" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Unit systems for the distance</label>
+                    <source_model>Wyomind\PointOfSale\Model\Config\Source\UnitSystem</source_model>
+                </field>
+                <field id="pattern" translate="label comment" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store description template</label>
+                    <comment><![CDATA[Html and css code are supported.<br/>Available variables : {{code}},{{name}},{{phone}},{{email}},{{address_1}},{{address_2}},{{city}},{{state}},{{country}},{{zipcode}},{{hours}},{{description}},{{image}}]]></comment>
+                </field>
+                <field id="time" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Time format to display</label>
+                    <comment>
+                        <![CDATA[<span class="notice">Example : h:i A for 2:30 AM.
+                            <br>
+                            <br>
+                            <style>
+                                .date-format TD{
+                                    border:1px solid grey !important;
+                                    vertical-align:middle;
+                                    text-align: center;
+                                }
+                                .date-format .section {
+                                    background: none repeat scroll 0 0 #FC862E;
+                                    color: white;
+                                    font-weight: bold;
+                                }
+                            </style>
+                            <strong>The following characters are recognized in the time format</strong>
+                            <table style="width:auto;border:1px solid grey" class='date-format' >
+                                <thead>
+                                    <tr style="color:#676056;">
+                                        <th>Character</th>
+                                        <th>Description</th>
+                                        <th>Returned values</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                    <tr><td><em>a</em> <td>Lowercase Ante meridiem and Post meridiem</td><td> 	<em>am</em> or <em>pm</em></td></tr>
+                                    <tr><td><em>A</em> 	 <td>Uppercase Ante meridiem and Post meridiem</td><td>  	<em>AM</em> or <em>PM</em></td></tr>
+                                    <tr><td><em>g</em> <td> 	12-hour format of an hour without leading zeros </td><td> 	<em>1</em> through <em>12</em></td></tr>
+                                    <tr><td><em>G</em> <td> 	24-hour format of an hour without leading zeros </td><td> 	<em>0</em> through <em>23</em></td></tr>
+                                    <tr><td><em>h</em> <td> 	12-hour format of an hour with leading zeros</td><td>  	<em>01</em> through <em>12</em></td></tr>
+                                    <tr><td><em>H</em> <td> 	24-hour format of an hour with leading zeros </td><td> 	<em>00</em> through <em>23</em></td></tr>
+                                    <tr><td><em>i</em> <td> 	Minutes with leading zeros </td><td> 	<em>00</em> to <em>59</em></td></tr>
+                                    <tr><td><em>s</em>  <td>	Seconds, with leading zeros </td><td> 	<em>00</em> through <em>59</em></td></tr>
+                                </tbody>
+                            </table>
+                        </span>]]>
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

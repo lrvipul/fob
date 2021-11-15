@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+  Copyright © 2019 Wyomind. All rights reserved.
+  See LICENSE.txt for license details.
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Point Of Sale</title>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Wyomind\PointOfSale\Block\PointOfSale" name="pointofsale" template="Wyomind_PointOfSale::pointofsale.phtml">
+                <arguments>
+                    <argument name="isPointOfSalePage" xsi:type="boolean">true</argument>
+                    <argument name="canSelectPreferredStore" xsi:type="boolean">false</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

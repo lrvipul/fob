@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+ * Copyright © 2019 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Event/etc/events.xsd">
+
+    <event name="customer_login">
+        <observer name="pickupatstore_customer_login" instance="Wyomind\PickupAtStore\Observer\CustomerLogin"/>
+    </event>
+    <event name="customer_logout">
+        <observer name="pickupatstore_customer_logout" instance="Wyomind\PickupAtStore\Observer\CustomerLogout"/>
+    </event>
+
+
+    <event name="customer_register_success">
+        <observer name="pickupatstore_customer_register_success" instance="Wyomind\PickupAtStore\Observer\CustomerRegisterSuccess"/>
+    </event>
+
+
+</config>

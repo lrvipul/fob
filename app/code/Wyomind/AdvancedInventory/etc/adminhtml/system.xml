@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<config>
+    <system>
+        <tab id="wyomind" translate="label" sortOrder="1000000" class='wyomind-logo'>
+            <label>Wyomind</label>
+        </tab>
+        <section id="advancedinventory" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label><![CDATA[Advanced Inventory]]></label>
+            <tab>wyomind</tab>
+            <resource>Wyomind_AdvancedInventory::config</resource>
+            <group id="license" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>License</label>
+                <field id="extension_version" translate="label" type="label" sortOrder="1" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Extension version</label>
+                </field>
+                <field id="activation_key" translate="label comment" type="label" sortOrder="110" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Activation key</label>
+                    <frontend_model>Wyomind\Framework\Block\Adminhtml\System\Config\Form\Field\ActivationKey</frontend_model>
+                </field>
+                <field id="license_status" translate="label comment" type="label" sortOrder="110" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>License Status</label>
+                    <frontend_model>Wyomind\Framework\Block\Adminhtml\System\Config\Form\Field\LicenseStatus</frontend_model>
+                </field>
+            </group>
+            <group id="settings" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Settings</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Advanced Inventory Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<span class="notice">If Advanced Inventory is disabled, stocks are managed natively in Magento </span>]]></comment>
+                </field>
+                <field id="multiple_assignation_enabled" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Multiple assignation enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<span class="notice">If enabled, one order can be assigned to different POS/WH instead of a unique POS/WH</span>]]></comment>
+                </field>
+                <field id="autoassign_order" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Automatic assignation enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<span class="notice">If enabled, orders are automatically assigned to one/more inventories by using :
+                                        <ol style='font-size:11px' class='notice'>
+                                           <li>Store view of the order</li>
+                                           <li>Customer group</li>
+                                           <li>Priority of the POS/WH</li>
+                                           <li>Assignment rules based on shipping address</li>
+                                           <li>Availability of the items in the stock</li>
+                                         </ol> 
+                                    </span>]]>
+                    </comment>
+                </field>
+                <field id="default_assignation_admin_order" translate="label comment" type="select" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Assignation for admin order</label>
+                    <source_model>Wyomind\AdvancedInventory\Model\System\Config\Source\Assignation</source_model>
+                </field>
+                <field id="order_notification" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Notifications in backend enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<span class="notice">If enabled, a notification is displayed when orders are unassigned to any POS/WH</span>]]></comment>
+                </field>
+                <field id="order_notification_from_date" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Start date for order notifications</label>
+                    <frontend_model>\Wyomind\AdvancedInventory\Model\System\Config\Source\Date</frontend_model>
+                    <comment><![CDATA[<script></script><span class="notice">Start notification for orders placed after this date </span>]]></comment>
+                </field>
+                <field id="disallow_assignation_status" translate="label comment" type="multiselect" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Order status disallowed for manual assignation</label>
+                    <source_model>\Wyomind\AdvancedInventory\Model\System\Config\Source\Statuses</source_model>
+                    <comment><![CDATA[<span class="notice">If enabled, the stock assignation for the above order statuses can't be edited</span>]]></comment>
+                </field>
+                <field id="auto_update_stock_status" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Automatic stock status update enabled </label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<span class="notice">If enabled, the stock status is automatically updated when product qty are changed from the admin panel or when one order is placed</span>]]></comment>
+                </field>
+                <field id="display_tooltip" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add information tooltip in the frontend stock grid</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="tooltip_text" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tooltip text</label>
+                    <depends>
+                        <field id="display_tooltip">1</field>
+                    </depends>
+                </field>
+                <field id="tooltip_size" translate="label comment" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tooltip size</label>
+                    <comment><![CDATA[<span class="notice">By default the tooltip size is 200 px. Unit is not required in the field.</span>]]></comment>
+                    <depends>
+                        <field id="display_tooltip">1</field>
+                    </depends>
+                </field>
+                <field id="tooltip_position" translate="label" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tooltip position</label>
+                    <source_model>\Wyomind\AdvancedInventory\Model\System\Config\Source\TooltipPosition</source_model>
+                    <comment><![CDATA[<span class="notice">The tooltip text position according to the mouse pointer.</span>]]></comment>
+                    <depends>
+                        <field id="display_tooltip">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="system" translate="label" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>System</label>
+                <field id="log_enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable log file</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<span class="notice">If enabled, all actions are logged in var/log/advanced-inventory-dd-mm-YYYY.log</span>]]></comment>
+                </field>
+                <field id="journal_enabled" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable the stock movement journal</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<span class="notice">If enabled, all stock movements are written in the stock journal</span>]]></comment>
+                </field>
+                <field id="journal_lifetime" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Stock movement journal lifetime history </label>
+                    <comment><![CDATA[<span class="notice">All entry older than X days will be automatically deleted.</span>]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

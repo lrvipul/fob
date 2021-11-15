@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+  Copyright © 2019 Wyomind. All rights reserved.
+  See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- Sales / Point Of Sale -->
+        <add id="Wyomind_PointOfSale::main" 
+             parent="Magento_Sales::sales" 
+             module="Wyomind_PointOfSale" 
+             title="Point Of Sale" 
+             sortOrder="100" 
+             resource="Wyomind_PointOfSale::main"/>
+        <add id="Wyomind_PointOfSale::pos" 
+             parent="Wyomind_PointOfSale::main" 
+             module="Wyomind_PointOfSale" 
+             title="Manage POS/WH"
+             sortOrder="10"  
+             resource="Wyomind_PointOfSale::pos"
+             action="pointofsale/manage" />
+        <add id="Wyomind_PointOfSale::attributes"
+             parent="Wyomind_PointOfSale::main"
+             module="Wyomind_PointOfSale"
+             title="POS/WH Attributes"
+             sortOrder="20"
+             resource="Wyomind_PointOfSale::pos_attributes"
+             action="pointofsale/attributes" />
+    </menu>
+</config>

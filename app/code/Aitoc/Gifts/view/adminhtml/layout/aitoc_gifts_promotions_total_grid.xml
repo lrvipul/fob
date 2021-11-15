@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="reports_report_grid"/>
+    <body>
+        <referenceBlock name="adminhtml.report.grid">
+            <arguments>
+                <argument name="id" xsi:type="string">aitocGiftsTotal</argument>
+                <argument name="dataSource" xsi:type="object">Aitoc\Gifts\Model\ResourceModel\Analytics\Total\Collection\Initial</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="adminhtml.report.grid.columnSet">
+            <block class="Magento\Backend\Block\Widget\Grid\Column" as="action">
+                <arguments>
+                    <argument name="sortable" xsi:type="string">0</argument>
+                    <argument name="header" xsi:type="string" translate="true">Action</argument>
+                    <argument name="type" xsi:type="string">string</argument>
+                    <argument name="index" xsi:type="string">name</argument>
+                    <argument name="id" xsi:type="string">name</argument>
+                    <argument name="renderer" xsi:type="string">Aitoc\Gifts\Ui\Report\Action</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" as="orders">
+                <arguments>
+                    <argument name="sortable" xsi:type="string">0</argument>
+                    <argument name="header" xsi:type="string" translate="true">Number of Orders</argument>
+                    <argument name="type" xsi:type="string">number</argument>
+                    <argument name="index" xsi:type="string">orders</argument>
+                    <argument name="id" xsi:type="string">orders</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Backend\Block\Widget\Grid\Column" as="orders_completed">
+                <arguments>
+                    <argument name="sortable" xsi:type="string">0</argument>
+                    <argument name="header" xsi:type="string" translate="true">Number of Completed Orders</argument>
+                    <argument name="type" xsi:type="string">number</argument>
+                    <argument name="index" xsi:type="string">orders_completed</argument>
+                    <argument name="id" xsi:type="string">orders_completed</argument>
+                    <argument name="header_css_class" xsi:type="string">col-inv-disc</argument>
+                    <argument name="column_css_class" xsi:type="string">col-inv-disc</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

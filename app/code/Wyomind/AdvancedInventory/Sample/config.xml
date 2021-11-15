@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © 2019 Wyomind. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<!-- configuration file used for the Wyomind's demo store: https://demo2.wyomind.com -->
+<config>
+    <login>AdvancedInventory</login>
+    <password>AdvancedInventory123</password>
+    <acl>
+        Magento_Sales::sales
+        Magento_Sales::sales_invoice
+        Magento_Sales::shipment
+        Magento_Sales::sales_creditmemo
+        Magento_Sales::sales_operation
+        Magento_Sales::sales_order
+        Magento_Sales::action
+        Magento_Sales::actions_view
+        Wyomind_PointOfSale::main
+        Wyomind_PointOfSale::pos
+        Wyomind_AdvancedInventory::main
+        {{system/config}}
+        Magento_Catalog::catalog
+        Magento_Catalog::catalog_inventory
+        Magento_Catalog::products
+        Wyomind_AdvancedInventory::config
+        Wyomind_AdvancedInventory::stocks
+        Wyomind_AdvancedInventory::product
+        Wyomind_AdvancedInventory::permissions
+        Wyomind_AdvancedInventory::journal
+        Magento_Backend::system
+        Magento_Backend::convert
+        Wyomind_MassStockUpdate::main
+        Wyomind_MassStockUpdate::profiles
+    </acl>
+    <sysconfig>
+        <item name="advancedinventory/settings/enabled">1</item>
+    </sysconfig>
+    <scenarii>
+        <scenario type="frontend" id="simple" default="1">
+            <label>Simple Product</label>
+            <comment><![CDATA[Check the display of the stocks grid for a simple product]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">push-it-messenger-bag.html</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="frontend" id="configurable">
+            <label>Configurable Product</label>
+            <comment><![CDATA[Check the display of the stocks grid for a configurable product]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">desiree-fitness-tee.html</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="backend" id="stocks_grid" default="1">
+            <label>Manage Stocks</label>
+            <comment><![CDATA[See the stocks grid in action]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">Wyomind_AdvancedInventory::stocks</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="backend" id="products_grid">
+            <label>Manage Products</label>
+            <comment><![CDATA[Check out what's new in the product grid]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">Magento_Catalog::products</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="backend" id="pointofsale_grid">
+            <label>Manage Points Of Sale</label>
+            <comment><![CDATA[See how to configure the points of sale]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">pointofsale/manage/index</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="backend" id="permissions">
+            <label>Manage Permissions</label>
+            <comment><![CDATA[See how to modify permissions on points of sale]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">Wyomind_AdvancedInventory::permissions</param>
+                </action>
+            </actions>
+        </scenario>
+    </scenarii>
+</config>

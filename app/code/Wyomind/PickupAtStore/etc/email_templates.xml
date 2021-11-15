@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © 2020 Wyomind. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="carriers_pickupatstore_emails_new_order_guest" label="Pickup At Store order - Guest" file="order_new_guest_pickupatstore.html" type="html" module="Wyomind_PickupAtStore" area="frontend"/>
+    <template id="carriers_pickupatstore_emails_new_order" label="Pickup At Store order" file="order_new_pickupatstore.html" type="html" module="Wyomind_PickupAtStore" area="frontend"/>
+</config>

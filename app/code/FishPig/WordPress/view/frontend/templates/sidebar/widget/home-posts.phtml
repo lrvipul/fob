@@ -1,0 +1,57 @@
+<?php
+/**
+ * @category    FishPig
+ * @package     FishPig_WordPress
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<?php $posts = $this->getPosts() ?>
+<?php if (count($posts) > 0): ?>
+	<div class="block block-blog block-recent-posts">
+		<?php if ($title = $this->getTitle()): ?>
+			<div class="block-title">
+				<strong><?php echo __($title) ?></strong>
+			</div>
+		<?php endif; ?>
+		<div class="block-content">
+			<ul id="<?php echo $this->getListId() ?>">
+			<?php foreach($posts as $post): ?>
+				<li class="item">
+					<?php if ($featuredImage = $post->getFeaturedImage()): ?>
+					<div class="col1 left">
+						<div class="featured-image left">
+							<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><img src="<?php echo $featuredImage->getFullsizeImage() ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"/></a>
+						</div>
+					</div>
+					<?php endif; ?>
+					<div class="col2">
+						<div class="post-date">
+							<?php 
+								$dat= $post->getPostDate();
+								$postDate  = date('F j, Y', strtotime($dat));
+							?>
+							<span><?php echo $postDate; ?></span>
+						</div>
+					
+						<div class="postTitle">
+							<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
+						</div>
+						<?php $limit = 50;
+							$apostContent = $post->getPostContent();
+							if(str_word_count($apostContent, 0) > $limit) {
+								$words = str_word_count($apostContent, 2);
+								$pos = array_keys($words);
+								$apostContent = substr($apostContent, 0, $pos[$limit]) . '...';
+							}
+						?>
+						<p class="post-excerpt" ><?php echo $apostContent; ?></p>
+						<p class="read-more" >
+							<a href="<?php echo $post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><?php echo __('Read More') ?></a>
+						</p>
+					</div>
+				</li>
+			<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+<?php endif; ?>

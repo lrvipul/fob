@@ -1,0 +1,730 @@
+<!--
+Copyright © 2019 Wyomind. All rights reserved.
+See LICENSE.txt for license details.
+-->
+
+<?php
+$helper = $this->helper('Wyomind\PointOfSale\Helper\Data');
+echo $helper->getGoogleMapsApiScript();
+?>
+<script type="text/javascript">
+    var PickupAtStore = {};
+    require(["jquery", "pointofsale"
+    ], function ($, pointofsale
+    ) {
+    $(function () {
+        PickupAtStore = {
+            debug: true,
+            /**
+             * backup object for dom element modified when selecting pickup at store
+             * used to revert back elements when deselecting pickupatstore
+             */
+            backup: {},
+            shippingMethodSetup: false,
+            /**
+             * is all information already loaded
+             */
+            posLoaded: false,
+            amastyOsc: <?php echo $block->isAmastyOscEnabled() ? "true" : "false"; ?>,
+            /**
+             * list of all date/time available for each store
+             */
+            datetimes: <?php echo json_encode($block->getDateTimes()); ?>,
+            /**
+             * list of all stores
+             */
+            places: <?php echo json_encode($block->getPlaces()); ?>,
+            nbStoresToDisplay: "<?php echo $block->getNbStoresToDisplay(); ?>",
+            /**
+             * list of pickup at store shipping methods
+             */
+            shippingMethods: <?php echo json_encode($block->getShippingMethods()); ?>,
+            /**
+             * Carrier config
+             */
+            config: <?php echo json_encode($block->getConfig()); ?>,
+            updateShippingMethodUrl: '<?php echo $block->getUpdateShippingMethodUrl(); ?>',
+            shippingAddressTitle: '<span class="title-number"></span><?php echo $block->getShippingAddressTitle(); ?>',
+            oldShippingAddressTitle: '',
+            billingAddressTitle: '<?php echo $block->getBillingAddressTitle(); ?>',
+            shiptoTitle: '<?php echo $block->getShiptoTitle(); ?>',
+            oldShiptoTitle: '<?php echo __('Ship To'); ?>',
+            currencySymbol: '<?php echo $block->getCurrencySymbol(); ?>',
+            /**
+             * date and time selected for the store selected
+             */
+            method: {
+                date: '',
+                time: ''
+            },
+            isCustomerLogged: <?php echo $block->isCustomerLogged() ? "true" : "false"; ?>,
+            /*
+             * #####################################################################
+             * Methods
+             * #####################################################################
+             */
+            /**
+             * Wait for a dom element to be added in the page
+             * @param {type} elt
+             * @param {type} callback
+             * @returns {undefined}
+             */
+            waitFor: function (elt, callback) {
+                var initializer = null;
+                initializer = setInterval(function () {
+                    if ($(elt).length > 0) {
+                        callback();
+                        clearInterval(initializer);
+                    }
+                }, 200);
+            },
+            waitNotFor: function (elt, callback) {
+                var initializer = null;
+                initializer = setInterval(function () {
+                    if ($(elt).length == 0) {
+                        callback();
+                        clearInterval(initializer);
+                    }
+                }, 200);
+            },
+            /**
+             * Is Pickup At Store selected as shipping method
+             * @returns boolean
+             */
+            isPASSelected: function () {
+                return $('#pas-yes').prop('checked');
+            },
+            /**
+             * Update the shipping address in the sidebar, in the billing step
+             * @returns void
+             */
+            updateShippingAddressRender: function () {
+                if (PickupAtStore.isPASSelected()) {
+                    PickupAtStore.oldShiptoTitle = $(".ship-to .shipping-information-title span").html();
+                    $(".ship-to .shipping-information-title span").html(PickupAtStore.shiptoTitle);
+                    var info = PickupAtStore.places["place"+PickupAtStore.method.store];
+                    var html = "";
+                    html += info.firstname + " " + info.lastname + "<br/>";
+                    html += info.street_1 + "<br/>";
+                    if (info.street_2 != null) {
+                        html += info.street_2 + "<br/>";
+                    }
+                    html += info.city;
+                    if (info.region != null || info.postcode != null) {
+                        html += ", ";
+                    }
+                    if (info.region != null) {
+                        html += info.region;
+                    }
+                    if (info.postcode != null) {
+                        html += " " + info.postcode;
+                    }
+                    html += "<br/>";
+                    html += info.country + "<br/>";
+                    if (info.telephone != null) {
+                        html += info.telephone;
+                    }
+                    $("#shipping-address-render").html(html);
+                } else {
+                    $(".ship-to .shipping-information-title span").html(PickupAtStore.oldShiptoTitle);
+                }
+            },
+            /**
+             * Hides or displays certain blocks in the billing address block when store pickup is selected or not
+             * @returns {undefined}
+             */
+            updateBillingAddress: function () {
+                if (PickupAtStore.isPASSelected()) {
+                    var cbx = $("input[name=payment\\[method\\]]").parent().parent().find(".payment-method-billing-address input[id^=billing-address-same-as-shipping-]");
+                    if (cbx.length == 0) {
+                        cbx = $("input[id^=billing-address-same-as-shipping-]");
+                    }
+                    var cancel = $("input[name=payment\\[method\\]]").parent().parent().find("button.action-cancel[type=button]");
+                    if (cancel.length == 0) {
+                        cancel = $("button.action-cancel[type=button]");
+                    }
+
+                    var title = $("#pas-billing-address-title");
+                    if (!PickupAtStore.amastyOsc) {
+                        title.html(PickupAtStore.billingAddressTitle);
+                        title.css({"display": "block"});
+                    }
+
+                    cancel.css({"display": "none"});
+                    cbx.parent().css({"display": "none"});
+                    if (cbx.prop('checked')) {
+                        cbx.click();
+                    }
+                    let firstname = $('.billing-address-form fieldset input[name=firstname]').val();
+                    let lastname = $('.billing-address-form fieldset input[name=lastname]').val();
+
+                    let place = PickupAtStore.places["place"+PickupAtStore.method.store];
+                    if (typeof place != "undefined" && firstname == place.firstname && lastname == place.lastname) {
+                        $('.billing-address-form fieldset input, .billing-address-form fieldset select').val("").trigger('change');
+                        $('.action.action-edit-address').trigger('click');
+                    }
+                } else {
+                    var title = $("#pas-billing-address-title");
+                    title.html("");
+                    title.css({"display": "block"});
+                }
+            },
+            /**
+             * Update the billing section if pickup at store has been selected => requires that the user fill in his billing address
+             * @returns {undefined}
+             */
+            updatePaymentSection: function () {
+                var cbx = $(".payment-method-billing-address input[id^=billing-address-same-as-shipping-]");
+                var cancel = $("button.action-cancel[type=button]");
+                cancel.css({"display": "none"});
+                cbx.parent().css({"display": "none"});
+                if (cbx.prop('checked')) {
+                    cbx.click();
+                }
+            },
+            /**
+             * Add the pickup at store choice on top of the first step
+             * @returns void
+             */
+            addPickupAtStoreBlocks: function () {
+                if (PickupAtStore.config.active === "1" && (($.isArray(PickupAtStore.places) && PickupAtStore.places.length > 0) || (!$.isArray(PickupAtStore.places) && !$.isEmptyObject(PickupAtStore.places)))) {
+                    PickupAtStore.oldShippingAddressTitle = $("#shipping .step-title").html();
+                    // enabling store pickup Yes/No
+                    var html = "<?php echo addcslashes($block->getChoiceBlock('IOSC'), '"'); ?>";
+                    $("#shipping").prepend(html);
+                    // store selector
+                    html = "<?php echo addcslashes($block->getPlacesBlock(), '"'); ?>";
+                    $("#opc-shipping_method").prepend(html);
+                    // hide places in the shipping methods list
+                    $("input[id^=s_method_pickupatstore_]").parent().parent().css({"display": "none"});
+                }
+            },
+            ignoreGmap: false,
+            /**
+             * Retrieve the list of available stores,
+             * date/time available for each store
+             * and config of the carrier
+             */
+            getPointsOfSale: function (storeId) {
+                if (PickupAtStore.posLoaded) {
+                    return;
+                }
+
+                var preferredStore = PickupAtStore.getCookie('preferred_store');
+                if (typeof preferredStore !== "undefined" && preferredStore !== null && preferredStore !== "") {
+                    preferredStore = JSON.parse(preferredStore);
+                } else {
+                    preferredStore = {id: -1};
+                }
+
+                PickupAtStore.backup.borderBottomEmail = $('li#shipping div#checkout-step-shipping form.form-login').css('border-bottom');
+                // remove already created select elements
+                $("#pas-pos-selector").remove();
+                $("#pas-date-selector").remove();
+                $("#pas-time-selector").remove();
+                // add the pos selector to the dom
+                if (PickupAtStore.config.dropdown === "1") {
+                    $('#pas-pos').parent().addClass('field');
+                    $('<select/>', {"id": "pas-pos-selector"}).appendTo('#pas-pos');
+                    $('<option/>', {
+                        "value": 0,
+                        "text": "<?php echo __('Select a point of sale'); ?>"
+                    }).appendTo('#pas-pos-selector');
+                    var pointsofsale = PickupAtStore.places;
+                    var posPlaces = PickupAtStore.getCookie('pos-places');
+                    if (typeof posPlaces !== "undefined" && posPlaces !== null && posPlaces !== "") {
+                        posPlaces = JSON.parse(posPlaces);
+                    } else {
+                        posPlaces = [];
+                    }
+
+                    if (posPlaces.length > 0) {
+                        var counter = 0;
+                        for (var pos in posPlaces) {
+                            if (PickupAtStore.nbStoresToDisplay === "0" || counter < PickupAtStore.nbStoresToDisplay || preferredStore.id == posPlaces[pos].id) {
+                                if (typeof PickupAtStore.shippingMethods[posPlaces[pos].id] !== "undefined") {
+                                    var suffix = "";
+                                    if (preferredStore.id == posPlaces[pos].id) {
+                                        suffix += " - " + "<?php echo __("Preferred Store"); ?>";
+                                    }
+                                    if (typeof posPlaces[pos].distance !== "undefined") {
+                                        suffix += " - " + posPlaces[pos].distance.text;
+                                    }
+                                    if (PickupAtStore.shippingMethods[posPlaces[pos].id].amount != 0) {
+                                        suffix += " (+ " + PickupAtStore.currencySymbol + PickupAtStore.shippingMethods[posPlaces[pos].id].amount + ")";
+                                    }
+                                    $('<option/>', {
+                                        "value": posPlaces[pos].id,
+                                        "text": pointsofsale["place"+posPlaces[pos].id].firstname + suffix
+                                    }).appendTo('#pas-pos-selector');
+                                }
+                            }
+                            if (typeof PickupAtStore.shippingMethods[posPlaces[pos].id] !== "undefined") {
+                                counter++;
+                            }
+                        }
+                    } else {
+                        for (var pos in pointsofsale) {
+                            var suffix = "";
+                            if (preferredStore.id == pos.replace('place', '')) {
+                                suffix += " - " + "<?php echo __("Preferred Store"); ?>";
+                            }
+                            if (PickupAtStore.shippingMethods[pos.replace('place', '')].amount != 0) {
+                                suffix = " (+ " + PickupAtStore.currencySymbol + PickupAtStore.shippingMethods[pos.replace('place', '')].amount + ")";
+                            }
+                            $('<option/>', {
+                                "value": pos.replace('place', ''),
+                                "text": pointsofsale[pos].firstname + suffix
+                            }).appendTo('#pas-pos-selector');
+                        }
+                    }
+                    if ((PickupAtStore.config.display_gmap === "1" || PickupAtStore.config.display_list === "1") && PickupAtStore.ignoreGmap === false) {
+                        $("#pas-gmap").css({"display": "block"});
+                        $("#pas-gmap").load("<?php echo $block->getUrl("pickupatstore/section/gmap"); ?>",
+                            function (responseTxt, statusTxt, xhr) {
+                                $("#pas-gmap").removeClass("pas-loader");
+                                $(document).trigger("pas_gmap_loaded");
+                                $("#checkout-shipping-method-load").css({"display": "none"}); // hide shipping methods
+                            }
+                        );
+                    } else {
+                        $("#pas-gmap").removeClass("pas-loader");
+                    }
+                }
+
+                if (preferredStore.id != -1 && typeof PickupAtStore.shippingMethods[preferredStore.id] !== "undefined") {
+                    $('#pas-pos-selector').val(preferredStore.id);
+                    $('#pas-pos-selector').trigger('change');
+                }
+
+                // else, no need to load anything as it is already loaded in the block
+                PickupAtStore.posLoaded = true;
+                $("#checkout-shipping-method-load").css({"display": "none"}); // hide shipping methods
+            },
+            getCookie: function (cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            },
+            /**
+             * Update the date selector based on the selected point of sale
+             * @param {type} posId
+             */
+            updateDate: function () {
+                $("#pas-date-selector").remove();
+                $("#pas-time-selector").remove();
+                $('<select/>', {"id": "pas-date-selector"}).appendTo('#pas-date');
+                $('<option/>', {
+                    "text": "<?php echo __('Preferred day'); ?>",
+                    "value": "0"
+                }).appendTo('#pas-date-selector');
+                if (PickupAtStore.method.store != "0") {
+                    var dates = PickupAtStore.datetimes[PickupAtStore.method.store].dates;
+                    for (var date in dates) {
+                        $('<option/>', {"value": date, "text": dates[date]}).appendTo('#pas-date-selector');
+                    }
+                }
+            },
+            /**
+             * Update the time selector based on the selected point of sale and date
+             * @param {type} posId
+             * @param {type} date
+             */
+            updateTime: function () {
+                $("#pas-time-selector").remove();
+                $('<select/>', {"id": "pas-time-selector"}).appendTo('#pas-time');
+                $('<option/>', {
+                    "text": "<?php echo __('Select an hour'); ?>",
+                    "value": "0"
+                }).appendTo('#pas-time-selector');
+                var hours = PickupAtStore.datetimes[PickupAtStore.method.store].hours[PickupAtStore.method.date];
+                for (var hour in hours) {
+                    $('<option/>', {"value": hour, "text": hours[hour]}).appendTo('#pas-time-selector');
+                }
+            },
+            /**
+             * Select a store as a shipping method
+             * @param {type} posId
+             */
+            updateShippingMethod: function () {
+                PickupAtStore.reinitAllShippingMethods();
+                if ($('#s_method_pickupatstore_pickupatstore_' + PickupAtStore.method.store).length >= 1) {
+                    $('#s_method_pickupatstore_pickupatstore_' + PickupAtStore.method.store).prop('checked', true);
+                    $('#s_method_pickupatstore_pickupatstore_' + PickupAtStore.method.store).trigger('click');
+                }
+                if ($('input[value=pickupatstore_pickupatstore_' + PickupAtStore.method.store).length >= 1) {
+                    $('input[value=pickupatstore_pickupatstore_' + PickupAtStore.method.store).trigger('click');
+                }
+                if (PickupAtStore.paypalExpressReview || PickupAtStore.amastyOsc || PickupAtStore.Iosc) {
+                    $.ajax({
+                        url: PickupAtStore.updateShippingMethodUrl,
+                        type: 'post',
+                        data: {data: PickupAtStore.method},
+                        showLoader: true,
+                        success: function (data) {
+                            $('#review-button').removeClass('disabled');
+                        },
+                        error: function (data) {
+                        }
+                    });
+                }
+            },
+            /**
+             * Reinit selected shipping method if the customer change the store or date
+             * @returns {undefined}
+             */
+            reinitAllShippingMethods: function () {
+                $('.table-checkout-shipping-method input[type=radio][name!=pas-store]').prop('checked', false);
+                $("#s_method_pickupatstore").prop('checked', true);
+            },
+            /**
+             * Display the store selection block when the customer choose to retrieve the order in store
+             * @param {type} show
+             * @returns {undefined}
+             */
+            showPickupAtStore: function (show, storeId) {
+                PickupAtStore.reinitAllShippingMethods();
+                // if pickup@store selected
+                if (show) {
+                    $($("#shipping .step-title")[1]).html(PickupAtStore.shippingAddressTitle);
+                    if (PickupAtStore.isCustomerLogged) {
+                        $("#checkout-step-shipping").prev().css({"display": "none"});
+                        $("#checkout-step-shipping").css({"display": "none"});
+                    }
+                    if (PickupAtStore.amastyOsc) {
+                        $("#checkout-step-shipping").prev().css({"display": "none"});
+                        var cbx = $("input[name=payment\\[method\\]]").parent().parent().find(".payment-method-billing-address input[id^=billing-address-same-as-shipping-]");
+                        if (cbx.length == 0) {
+                            cbx = $("input[id^=billing-address-same-as-shipping-]");
+                        }
+                        cbx.parent().css({"display": "none"});
+                    }
+                    $("#co-shipping-form").css({"display": "none"}); // hide shipping address
+                    $("#checkout-shipping-method-load").css({"display": "none"}); // hide shipping methods
+                    $("#opc-shipping_method .checkout-shipping-method .step-title").css({"display": "none"}); // hide shipping methods title
+                    $("#opc-shipping_method .checkout-shipping-method-load").css({"display": "none"});
+
+                    $(".store-pickup").css({"display": "block"}); // hide shipping address
+                    $('li#shipping div#checkout-step-shipping form.form-login').css({'border-bottom': 'none'});
+                    PickupAtStore.getPointsOfSale();
+
+                    if (PickupAtStore.isCustomerLogged) {
+                        if ($('.shipping-address-item').length == $('.shipping-address-item.not-selected-item').length) {
+                            $($('.shipping-address-item')[0]).find('button').trigger('click');
+                        }
+                    }
+                    PickupAtStore.waitFor("#checkout-shipping-method-load", function () {
+                        $("#checkout-shipping-method-load").css({"display": "none"});
+                    });
+                    if ($("#billing-address-same-as-shipping-").length >= 1 && $("#billing-address-same-as-shipping-").prop('checked') != 1) {
+                        $("#billing-address-same-as-shipping-").trigger('click');
+                    }
+
+                    if (PickupAtStore.Iosc) {
+                        $("#iosc_billingaddress").css({'display': 'none'});
+                    }
+
+                }
+                // pickup@store not selected
+                else {
+                    if ($("input[id^=s_method_]").length > 0) {
+                        $($("input[id^=s_method_]")[0]).click();
+                    }
+                    $($("#shipping .step-title")[1]).html(PickupAtStore.oldShippingAddressTitle);
+                    if (PickupAtStore.isCustomerLogged) {
+                        $("#checkout-step-shipping").prev().css({"display": "block"});
+                        $("#checkout-step-shipping").css({"display": "block"});
+                    }
+                    if (PickupAtStore.amastyOsc) {
+                        $("#checkout-step-shipping").prev().css({"display": "block"});
+                        var cbx = $("input[name=payment\\[method\\]]").parent().parent().find(".payment-method-billing-address input[id^=billing-address-same-as-shipping-]");
+                        if (cbx.length == 0) {
+                            cbx = $("input[id^=billing-address-same-as-shipping-]");
+                        }
+                        cbx.parent().css({"display": "block"});
+                    }
+                    if (PickupAtStore.Iosc) {
+                        $("#iosc_billingaddress").css({'display': 'block'});
+                    }
+                    $("#co-shipping-form").css({"display": "block"}); // display shipping address
+                    $("#checkout-shipping-method-load").css({"display": "block"}); // display shipping methods
+                    $("#opc-shipping_method .checkout-shipping-method .step-title").css({"display": "block"}); // display shipping methods title
+                    $("#opc-shipping_method .checkout-shipping-method-load").css({"display": "block"});
+
+                    $(".store-pickup").css({"display": "none"}); // hide shipping address
+                    $('li#shipping div#checkout-step-shipping form.form-login').css({'border-bottom': PickupAtStore.backup.borderBottomEmail});
+
+                    //$('#shipping-new-address-form .field._error').attr('aria-invalid', false);
+                    //$('#shipping-new-address-form .field-error').remove();
+                    //$('#shipping-new-address-form .field._error').removeClass('_error');
+                    $("#iosc_billingaddress").css({'display': 'block'});
+
+                }
+                PickupAtStore.updateBillingAddress();
+            },
+            /**
+             * When the customer choose Pickup at store, hides the shipping methods block
+             * @param {type} elt
+             * @returns {undefined}
+             */
+            hideShippingMethods: function (elt) {
+                if (PickupAtStore.isPASSelected()) {
+                    $(elt).css({"display": "none"});
+                } else {
+                    $(elt).css({"display": "block"});
+                }
+            },
+            /**
+             * #####################################################################
+             * Debugging tools
+             * #####################################################################
+             */
+            debugConfig: function () {
+                if (PickupAtStore.debug) {
+                    var log = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+                    log += "~ PAS CONFIG\n";
+                    log += "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+                    for (var i in PickupAtStore.config) {
+                        log += "~ " + i + " : " + PickupAtStore.config[i] + "\n";
+                    }
+                    log += "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+                    console.log(log);
+                }
+            },
+            debugPlaces: function () {
+                if (PickupAtStore.debug) {
+                    var log = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+                    log += "~ PAS PLACES\n";
+                    log += "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+                    for (var i in PickupAtStore.places) {
+                        log += "~~~ Place #" + i + "\n";
+                        for (var j in PickupAtStore.places[i]) {
+                            log += "~ " + j + " : " + PickupAtStore.places[i][j] + "\n";
+                        }
+                    }
+                    log += "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+                    console.log(log);
+                }
+            },
+            waitForLocalStorage: function (cb, timer) {
+
+                if (typeof localStorage["mage-cache-storage"] !== "undefined") {
+                    var cacheStorage = $.parseJSON(localStorage["mage-cache-storage"]);
+                    if (!cacheStorage['customer']) {
+                        return (timer = setTimeout(PickupAtStore.waitForLocalStorage.bind(null), 100));
+                    }
+                }
+                clearTimeout(timer);
+                if (typeof cb !== 'function') {
+                    return "";
+                }
+                return cb();
+            },
+            paypalExpressReview: false
+        };
+        PickupAtStore.waitFor("li#shipping", PickupAtStore.addPickupAtStoreBlocks);
+        // select a store from the dropdown
+        $(document).on('change', '#pas-pos-selector', function () {
+            $(this).removeClass('mage-error');
+            PickupAtStore.method = {'store': $(this).val(), 'date': '0', 'time': '0'};
+            if (PickupAtStore.config.date === "1") {
+                PickupAtStore.updateDate();
+            } else {
+                PickupAtStore.updateShippingMethod();
+            }
+            $(document).trigger("store_selected_pas", PickupAtStore.method.store);
+        });
+        // select a store without dropdown
+        $(document).on('click', 'input[name^=pas-store]', function () {
+            // remove error message if needed
+            $('#error-no-pos-selected').css({"display": "none"});
+            var id = $(this).attr("id").split("_")[1];
+            PickupAtStore.method = {'store': id, 'date': '0', 'time': '0'};
+            PickupAtStore.updateShippingMethod();
+        });
+        // select a date
+        $(document).on('change', '#pas-date-selector', function () {
+            $(this).removeClass('mage-error');
+            PickupAtStore.method.date = $(this).val();
+            PickupAtStore.method.time = '0';
+            if (PickupAtStore.config.time === "1") {
+                PickupAtStore.updateTime();
+            } else {
+                PickupAtStore.updateShippingMethod();
+            }
+        });
+        // select a time
+        $(document).on('change', '#pas-time-selector', function () {
+            $(this).removeClass('mage-error');
+            PickupAtStore.method.time = $(this).val();
+            PickupAtStore.updateShippingMethod();
+        });
+        // event from the point of sale gmap (store selected)
+        $(document).on("store_selected_pos", function (evt, id) {
+            if (!PickupAtStore.shippingMethodSetup) {
+                $('#pas-pos-selector').val(id);
+                PickupAtStore.method = {'store': id};
+                if (PickupAtStore.config.date === "1") {
+                    PickupAtStore.updateDate();
+                } else {
+                    PickupAtStore.updateShippingMethod();
+                }
+            } else {
+                var tmp = PickupAtStore.shippingMethodSetup;
+                PickupAtStore.shippingMethodSetup = false;
+                pointofsale.displayStore(pointofsale.getStoreIndexById(tmp));
+            }
+        });
+
+        // billing address events
+        $(document).on('click', "input[name=payment\\[method\\]]", function () {
+            if (PickupAtStore.isPASSelected()) {
+                var cbx = $(this).parent().parent().find(".payment-method-billing-address input[id^=billing-address-same-as-shipping-]");
+                var cancel = $(this).parent().parent().find("button.action-cancel[type=button]");
+                if (cbx.length == 0) {
+                    cbx = $("input[id^=billing-address-same-as-shipping-]");
+                }
+                var cancel = $("input[name=payment\\[method\\]]").parent().parent().find("button.action-cancel[type=button]");
+                if (cancel.length == 0) {
+                    cancel = $("button.action-cancel[type=button]");
+                }
+                cancel.css({"display": "none"});
+                cbx.parent().css({"display": "none"});
+                if (cbx.prop('checked')) {
+                    cbx.click();
+                }
+            }
+        });
+        $(document).on('click', 'button[data-role=opc-continue]', function () {
+            PickupAtStore.waitFor(".billing-address-details", function () {
+                setTimeout(PickupAtStore.updateBillingAddress, 500);
+            });
+        });
+
+        PickupAtStore.waitNotFor("div#checkout-loader", function () {
+            if (PickupAtStore.config.store_pickup_activated_default === "1" && PickupAtStore.config.active === "1" && !$.isEmptyObject(PickupAtStore.places)) {
+                if ($("#pas-yes").prop('checked')) {
+                    PickupAtStore.showPickupAtStore(true);
+                }
+            }
+        });
+
+        PickupAtStore.waitNotFor("#checkout-loader", function () {
+            PickupAtStore.waitFor("#co-shipping-form", function () {
+                PickupAtStore.waitForLocalStorage(function () {
+                    var cacheStorage = $.parseJSON(localStorage["mage-cache-storage"]);
+                    var shippingMethod = null;
+                    if (typeof cacheStorage['checkout-data'] !== "undefined" && typeof cacheStorage['checkout-data']['selectedShippingRate'] !== "undefined" && cacheStorage['checkout-data']['selectedShippingRate'] !== null) {
+                        shippingMethod = cacheStorage['checkout-data']['selectedShippingRate'];
+                    } else if (typeof cacheStorage['cart-data'] !== "undefined" && typeof cacheStorage['cart-data']['shippingMethodCode'] !== "undefined") {
+                        shippingMethod = cacheStorage['cart-data']['shippingCarrierCode'] + '_' + cacheStorage['cart-data']['shippingMethodCode'];
+                    }
+                    if (shippingMethod != null) {
+                        if (shippingMethod.startsWith("pickupatstore_pickupatstore_")) {
+                            var storeId = shippingMethod.replace("pickupatstore_pickupatstore_", "");
+                            PickupAtStore.shippingMethodSetup = storeId;
+                            $("#pas-yes").attr('checked', 'checked');
+                            PickupAtStore.showPickupAtStore(true);
+                            $(document).on('pas_gmap_loaded', function (evt) {
+                                $('#pas-pos-selector').val(storeId);
+                                PickupAtStore.method = {'store': storeId};
+                                if (PickupAtStore.config.date === "1") {
+                                    PickupAtStore.updateDate();
+                                } else {
+                                    PickupAtStore.updateShippingMethod();
+                                }
+                            });
+                        }
+                    }
+
+                });
+            });
+        });
+
+        PickupAtStore.waitFor("select#shipping-method", function () {
+            PickupAtStore.paypalExpressReview = true;
+            if ($('#shipping-method').val().startsWith("pickupatstore_pickupatstore_")) {
+                var method = $('#shipping-method').val();
+                var storeId = method.replace("pickupatstore_pickupatstore_", "");
+                PickupAtStore.method = {'store': storeId, 'date': '0', 'time': '0'};
+                if (PickupAtStore.config.date === "1") {
+                    PickupAtStore.updateDate();
+                } else {
+                    PickupAtStore.updateShippingMethod();
+                }
+            }
+            $(document).on('change', 'select#shipping-method', function () {
+                var method = $(this).val();
+                if (method.startsWith("pickupatstore_pickupatstore_")) {
+                    var storeId = method.replace("pickupatstore_pickupatstore_", "");
+                    PickupAtStore.method = {'store': storeId, 'date': '0', 'time': '0'};
+                    if (PickupAtStore.config.date === "1") {
+                        PickupAtStore.updateDate();
+                    } else {
+                        PickupAtStore.updateShippingMethod();
+                    }
+                } else {
+                    $("#pas-date-selector").remove();
+                    $("#pas-time-selector").remove();
+                }
+            });
+        });
+
+        $(document).on("click", "button[data-role=opc-continue]", function () {
+            if (!PickupAtStore.isPASSelected()) {
+                if ($('input[id^=s_method_pickupatstore_pickupatstore_]').length > 0) {
+                    var found = false;
+                    $('input[id^=s_method_pickupatstore_pickupatstore_]').each(function () {
+                        if ($(this).attr('checked') == "checked") {
+                            alert('Please select a shipping method');
+                            found = true;
+                            return;
+                        }
+                    });
+                    if (found) {
+                        return false;
+                    }
+                }
+            }
+            var initializer = null;
+            initializer = setInterval(function () {
+                if ($("#payment")[0].style.display == "list-item") {
+                    clearInterval(initializer);
+                    setTimeout(function () {
+                        $(".payment-method._active input[type=radio]").click();
+                    }, 500);
+                }
+            }, 200);
+        });
+
+        $(document).on("change click", ".payment-method-billing-address input[id^=billing-address-same-as-shipping-]", function () {
+            if (PickupAtStore.isPASSelected()) {
+                var cbx = $(".payment-method-billing-address input[id^=billing-address-same-as-shipping-]");
+                var cancel = $("button.action-cancel[type=button]");
+                cancel.css({"display": "none"});
+                cbx.parent().css({"display": "none"});
+                if (cbx.prop('checked')) {
+                    cbx.click();
+                }
+            }
+        });
+
+        $(document).on("pos_list_updated", function () {
+            PickupAtStore.posLoaded = false;
+            PickupAtStore.ignoreGmap = true;
+            PickupAtStore.getPointsOfSale();
+        });
+    });
+})
+    ;
+</script>

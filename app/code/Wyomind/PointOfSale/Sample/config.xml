@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+  Copyright © 2019 Wyomind. All rights reserved.
+  See LICENSE.txt for license details.
+-->
+<!-- configuration file used for the Wyomind's demo store: https://demo2.wyomind.com -->
+<config>
+    <login>PointOfSale</login>
+    <password>PointOfSale123</password>
+    <activation_key>WYOPOS</activation_key>
+    <acl>
+        Magento_Sales::sales
+        Wyomind_PointOfSale::main
+        Wyomind_PointOfSale::pos
+        {{system/config}}
+        Wyomind_PointOfSale::pointofsale_config
+    </acl>
+    <scenarii>
+        <scenario type="frontend" id="pointofsale" default="1">
+            <label>Store Locator</label>
+            <comment><![CDATA[See the store locator in action]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">pointofsale</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="frontend" id="store_page">
+            <label>Store Page</label>
+            <comment><![CDATA[See a store page]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">paris</param>
+                </action>
+            </actions>
+        </scenario>
+        <scenario type="backend" id="pointofsale_grid">
+            <label>Manage Points Of Sale</label>
+            <comment><![CDATA[See how to configure the points of sale]]></comment>
+            <actions>
+                <action type="landing_page">
+                    <param name="url">pointofsale/manage/index</param>
+                </action>
+            </actions>
+        </scenario>
+
+        <!--<scenario type="backend" id="custom_attributes">-->
+        <!--<label>Custom Attributes</label>-->
+        <!--<comment><![CDATA[]]></comment>-->
+        <!--<actions>-->
+        <!--<action type="landing_page">-->
+        <!--<param name="url">pointofsale/attributes/index</param>-->
+        <!--</action>-->
+        <!--</actions>-->
+        <!--</scenario>-->
+    </scenarii>
+</config>

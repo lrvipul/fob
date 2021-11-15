@@ -1,0 +1,60 @@
+<div class="store-pickup" style="display:none">
+    <div class="step-title" data-role="title"><?php echo $block->getTitle(); ?></div>
+    <div id="checkout-step-shipping--" class="pas-select-pos step-content" data-role="content">
+        <div id="pas-content" class="pas-content">
+            <?php if ($this->useDropdown()) : ?>
+                <fieldset class="fieldset" data-bind="blockLoader: isLoading">
+                    <div class="">
+                        <div class="control _with-tooltip" id="pas-pos">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control _with-tooltip" id="pas-date">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control _with-tooltip" id="pas-time">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control _with-tooltip pas-loader <?php echo $this->getDisplayListAndGMapClass(); ?>" style="display:none" id="pas-gmap">
+                        </div>
+                    </div>
+                </fieldset>
+            <?php else : ?>
+                <table class="table-checkout-shipping-method" style="width:100%">
+                    <tbody>
+                    <?php $collection = $this->getPlaces(); ?>
+                    <?php foreach ($collection as $pos) : ?>
+                        <tr class="row" <?php if (!$pos->getData('displayed')) echo "style='display:none;'"; ?>>
+                            <td class="col">
+                                <input type="radio" id="pas-store_<?php echo $pos->getPlaceId(); ?>"
+                                       name="pas-store" <?php if ($pos->getData('preferred.store')) echo "checked='checked'"; ?>/>
+                            </td>
+                            <td class="col">
+                                <?php echo $pos->getName(); ?>
+                                <?php if ($pos->getData('preferred.store')): ?>
+                                    <span class="preferred"><?php echo " " . __('Preferred Store'); ?></span>
+                                <?php endif; ?>
+                                <?php if ($pos->getData('distance.text')): ?>
+                                    <span class="distance">
+                                        <?php echo $pos->getData('distance.text'); ?>
+                                        </span>
+                                <?php endif; ?>
+                                <?php if ($block->getDisplayDescription()) : ?>
+                                    <span style="font-size: 0.8em;"><?php echo $this->_posHelper->getStoreDescription($pos); ?></span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="col">
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <div class="message error" id="error-no-pos-selected">
+                    <div><?php echo __("Please select a point of sale"); ?></div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

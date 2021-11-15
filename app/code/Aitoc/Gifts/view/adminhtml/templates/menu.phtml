@@ -1,0 +1,35 @@
+<?php
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+?>
+<?php
+/* @var $block \Aitoc\Gifts\Block\Adminhtml\Menu */
+?>
+<div class="aitoc-menu-items">
+    <?php echo $block->getButtonHtml(); ?>
+    <div class="actions dropdown closable">
+        <?php foreach ($block->getItems() as $index => $item): ?>
+            <div class="item <?php if ($block->isCurrent($index)): ?>current<?php endif; ?> <?php if (isset($item['separator'])): ?>separator<?php endif; ?>">
+                <a href="<?php echo $item['url'] ?>" <?php echo $block->renderAttributes($item) ?>><?php echo $item['title'] ?></a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<script>
+    require([
+        'jquery',
+        'Aitoc_Gifts/js/action-modal'
+    ], function($){
+
+
+        $('#promotion_action_create').aitocActionModal({
+            actions: {
+                actionCreateUrl: "<?= $this->getCreateActionUrl() ?>"
+            }
+        });
+    });
+</script>

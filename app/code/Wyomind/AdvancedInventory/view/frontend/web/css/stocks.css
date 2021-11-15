@@ -1,0 +1,28 @@
+.in_stock {
+    color: green;
+}
+
+.out_of_stock {
+    color: red;
+}
+
+.backorder {
+    color: orange;
+}
+
+.notice {
+    font-size: 11px;
+    color: red;
+}
+
+.ai-status-message {
+    color: green;
+    font-weight: bold;
+}
+
+#stocks-grid.loader {
+    min-height: 50px;
+    background: url("../images/loader.gif");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}

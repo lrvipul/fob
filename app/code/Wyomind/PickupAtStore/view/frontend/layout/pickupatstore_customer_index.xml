@@ -1,0 +1,21 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <css src="Wyomind_PointOfSale::css/pointofsale.css"/>
+        <css src="Wyomind_PickupAtStore::css/preferred-store.css"/>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My Preferred Store</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="my_preferred_store" template="Wyomind_PickupAtStore::preferred-store.phtml">
+                <arguments>
+                    <argument name="isWidget" xsi:type="boolean">false</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

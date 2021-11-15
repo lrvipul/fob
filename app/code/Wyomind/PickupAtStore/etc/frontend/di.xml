@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+
+    <!-- PLUGIN -->
+    <!--<type name="Magento\Customer\CustomerData\Customer">-->
+        <!--<plugin name="wyomind_pickupatstore_plugin_customer_customerdata_customer"-->
+                <!--type="Wyomind\PickupAtStore\Plugin\Customer\CustomerData\Customer" />-->
+    <!--</type>-->
+
+</config>

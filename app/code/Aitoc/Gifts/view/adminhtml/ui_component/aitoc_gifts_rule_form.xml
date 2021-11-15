@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aitoc_gifts_rule_form.aitoc_gifts_rule_form_data_source</item>
+            <item name="deps" xsi:type="string">aitoc_gifts_rule_form.aitoc_gifts_rule_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Rule</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">aitoc_gifts_rule_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="array">
+                <item name="name" xsi:type="string">back</item>
+                <item name="label" xsi:type="string" translate="true">Back</item>
+                <item name="class" xsi:type="string">back</item>
+                <item name="url" xsi:type="string">*/promotions/</item>
+            </item>
+            <item name="delete" xsi:type="string">Aitoc\Gifts\Block\Adminhtml\Rule\Edit\DeleteButton</item>
+            <item name="save" xsi:type="string">Aitoc\Gifts\Block\Adminhtml\Rule\Edit\SaveButton</item>
+        </item>
+    </argument>
+    <dataSource name="aitoc_gifts_rule_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aitoc\Gifts\Model\Rule\DataProvider</argument>
+            <argument name="name" xsi:type="string">aitoc_gifts_rule_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">rule_id</argument>
+            <argument name="requestFieldName" xsi:type="string">rule_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="aitoc_gifts/rule/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Rule Information</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="initializeFieldsetDataByDefault" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="rule_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">rule_id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="is_active">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Enabled</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="string">1</item>
+                        <item name="false" xsi:type="string">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">is_active</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </field>
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Rule Name</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">name</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </field>
+        <field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">description</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </field>
+        <field name="stores">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Stores</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">stores</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="tooltip" xsi:type="array">
+                        <item name="link" xsi:type="string">http://docs.magento.com/m2/ce/user_guide/configuration/scope.html</item>
+                        <item name="description" xsi:type="string">What is this?</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+                <item name="options" xsi:type="object">\Aitoc\Gifts\Model\Rule\StoresProvider</item>
+            </argument>
+        </field>
+        <field name="customer_group" formElement="multiselect">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+                <item name="options" xsi:type="object">\Aitoc\Gifts\Model\Rule\CustomerGroup</item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <label translate="true">Customer Groups</label>
+                <dataScope>customer_group</dataScope>
+            </settings>
+        </field>
+        <field name="priority">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Priority</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">priority</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-zero-or-greater" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="options" xsi:type="object">Aitoc\Gifts\Ui\Component\Listing\Column\SaleRuleOptions</item>
+            </argument>
+        </field>
+        <field name="stop_rules_processing">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Stop Rule Processing</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">stop_rules_processing</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-zero-or-greater" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="tooltip" xsi:type="array">
+                        <item name="description" xsi:type="string">The Stop further rules processing flag allows you to make relationships between different rules.
+                            Your store will execute the shopping cart rules  in order of priority. If the system reaches a rule with the Stop Further Rules Processing flag it will stop going through any lower priority rules.
+                            This allows you to make some rules exclusive.</item>
+                    </item>
+                </item>
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
+            </argument>
+        </field>
+        <field name="coupon_type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Coupon Type</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">coupon_type</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                    <item name="component" xsi:type="string">Aitoc_Gifts/js/form/element/coupon-type</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="options" xsi:type="object">Aitoc\Gifts\Model\Rule\CouponOptions</item>
+            </argument>
+        </field>
+        <field name="coupon_code">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Coupon Code</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">coupon_code</item>
+                    <item name="visibleValue" xsi:type="string">coupon_code</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">90</item>
+                </item>
+            </argument>
+        </field>
+        <field name="sales_rule_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Use Coupon From Cart Rule</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">sales_rule_id</item>
+                    <item name="visibleValue" xsi:type="string">sales_rule_id</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="options" xsi:type="object">Aitoc\Gifts\Ui\Component\Listing\Column\SaleRuleOptions</item>
+            </argument>
+        </field>
+        <field name="from_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">From Date</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">from_date</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-date</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                </item>
+            </argument>
+        </field>
+        <field name="to_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">To Date</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">to_date</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-date</item>
+                    <item name="sortOrder" xsi:type="number">120</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="actions">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">General</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+                <item name="initializeFieldsetDataByDefault" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="action_type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Rule Type</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">action</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="component" xsi:type="string">Aitoc_Gifts/js/form/element/action-type</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+                <item name="options" xsi:type="object">Aitoc\Gifts\Model\Rule\ActionOptions</item>
+            </argument>
+        </field>
+        <field name="discount_type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Discount Type</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="dataScope" xsi:type="string">discount_type</item>
+                    <item name="component" xsi:type="string">Aitoc_Gifts/js/form/element/discount-type</item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="string">discount_amount</item>
+                            <item name="label" xsi:type="string" translate="true">Amount</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="value" xsi:type="string">discount_percent</item>
+                            <item name="label" xsi:type="string" translate="true">Percent</item>
+                        </item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </field>
+        <field name="discount_amount" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="visibleValue" xsi:type="string">discount_amount</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="notice" xsi:type="string" translate="true">Set zero to giveaway product for free.</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Discount Amount</label>
+                <dataScope>discount_amount</dataScope>
+            </settings>
+        </field>
+        <field name="discount_percent" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="visibleValue" xsi:type="string">discount_percent</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="notice" xsi:type="string" translate="true">
+                        Possible use a "-" character for negative percent discount.
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <label translate="true">Discount Percent (%)</label>
+                <dataScope>discount_percent</dataScope>
+            </settings>
+        </field>
+        <field name="discount_qty" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-greater-than-zero" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="notice" xsi:type="string" translate="true">How many free items the discount is applied To.</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Qty Discount is Applied To</label>
+                <dataScope>discount_qty</dataScope>
+            </settings>
+        </field>
+        <field name="discount_step" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="visibleValue" xsi:type="string">discount_step</item>
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Discount Step (Each X)</label>
+                <dataScope>discount_step</dataScope>
+            </settings>
+        </field>
+        <field name="cart_amount" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="visibleValue" xsi:type="string">cart_amount</item>
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">aitoc_gifts_rule</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-greater-than-zero" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="notice" xsi:type="string" translate="true">Get X GIFT Items for Every Spent Amount.</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Spent Amount</label>
+                <dataScope>cart_amount</dataScope>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="conditions">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Conditions and Actions</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">40</item>
+                <item name="initializeFieldsetDataByDefault" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <container name="conditions_apply_to" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Cart Conditions</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">Aitoc\Gifts\Block\Adminhtml\Rule\Edit\Tab\Conditions</argument>
+            </htmlContent>
+        </container>
+        <container name="actions_apply_to" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Cart Item Actions</item>
+                </item>
+            </argument>
+            <htmlContent name="actions_apply_to_html">
+                <block name="actions_apply_to" class="Aitoc\Gifts\Block\Adminhtml\Rule\Edit\Tab\Actions"/>
+            </htmlContent>
+        </container>
+    </fieldset>
+    <fieldset name="coupons">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Coupons</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">50</item>
+                <item name="initializeFieldsetDataByDefault" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <container name="generated_coupons" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Coupon Generation</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+            <htmlContent name="rule_generated_coupons">
+                <block class="Aitoc\Gifts\Block\Adminhtml\Rule\Edit\Tab\Coupons"
+                       name="rule_generated_coupons" as="rule_generated_coupons_tab" template="Aitoc_Gifts::tab/coupons.phtml">
+                    <arguments>
+                        <argument name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Manage Coupon Codes</item>
+                            <item name="collapsible" xsi:type="boolean">true</item>
+                            <item name="opened" xsi:type="boolean">false</item>
+                            <item name="sortOrder" xsi:type="string">50</item>
+                            <item name="canShow" xsi:type="boolean">false</item>
+                            <item name="componentType" xsi:type="string">fieldset</item>
+                            <item name="component" xsi:type="string">Aitoc_Gifts/js/form/element/manage-coupons</item>
+                        </argument>
+                    </arguments>
+                    <block class="Aitoc\Gifts\Block\Adminhtml\Rule\Edit\Tab\Coupons\Form" name="rule_generated_coupons_tab_form"/>
+                    <block class="Aitoc\Gifts\Block\Adminhtml\Rule\Edit\Tab\Coupons\Grid" name="rule_generated_coupons_tab_grid"/>
+                </block>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

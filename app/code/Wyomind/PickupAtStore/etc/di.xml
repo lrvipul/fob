@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <!-- logger -->
+    <type name="Wyomind\PickupAtStore\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\PickupAtStore\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">PAS</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="notice" xsi:type="object">Wyomind\PickupAtStore\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid">
+        <arguments>
+            <argument name="joins" xsi:type="array">
+                <item name="sales_order_entity" xsi:type="array">
+                    <item name="table" xsi:type="string">sales_order</item>
+                    <item name="origin_column" xsi:type="string">entity_id</item>
+                    <item name="target_column" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+            <argument name="columns" xsi:type="array">
+                <item name="pickup_datetime" xsi:type="string">sales_order_entity.pickup_datetime</item>
+                <!--<item name="pickup_store" xsi:type="string">sales_order_entity.pickup_store</item>-->
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- API -->
+    <preference for="Wyomind\PickupAtStore\Api\PickupAtStoreInterface" type="Wyomind\PickupAtStore\Model\PickupAtStore"/>
+
+    <preference for="Magento\Sales\Model\Order" type="Wyomind\PickupAtStore\Magento\Sales\Model\Order"/>
+
+    <preference for="Magento\Sales\Model\Order\Email\Sender\OrderSender" type="Wyomind\PickupAtStore\Magento\Sales\Model\Order\Email\Sender\OrderSender"/>
+
+    <preference for="Magento\Sales\Model\Order\OrderCustomerExtractor" type="Wyomind\PickupAtStore\Magento\Sales\Model\Order\OrderCustomerExtractor"/>
+
+    <!-- PLUGIN -->
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="wyomind_pickupatstore_plugin_checkout_model_shippinginformationmanagement" type="Wyomind\PickupAtStore\Plugin\Checkout\Model\ShippingInformationManagement"/>
+    </type>
+
+    <type name="Magento\Checkout\Model\TotalsInformationManagement">
+        <plugin name="wyomind_pickupatstore_plugin_checkout_model_totalsinformationmanagement" type="Wyomind\PickupAtStore\Plugin\Checkout\Model\TotalsInformationManagement"/>
+    </type>
+    
+    <!-- Enable this plugin if using Magenest_Sagepay -->
+    <!--<type name="Magenest\SagePay\Helper\SageHelper">-->
+        <!--<plugin name="wyomind_pickupatstore_plugin_magenest_sageppay_helper_sagehelper"-->
+                <!--type="Wyomind\PickupAtStore\Plugin\Magenest\SagePay\Helper\SageHelper" /> -->
+    <!--</type>-->
+    
+
+
+    <type name="Wyomind\PickupAtStore\Magento\Sales\Model\Order\Email\Sender\OrderSender">
+        <arguments>
+            <argument name="identityContainer" xsi:type="object">Wyomind\PickupAtStore\Magento\Sales\Model\Order\Email\Container\OrderIdentity\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\PickupAtStore\Controller\Section\Gmap">
+        <arguments>
+            <argument name="cacHelper" xsi:type="object">Wyomind\PickupAtStore\Helper\Data\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Wyomind\PickupAtStore\Controller\Update\Shippingmethod">
+        <arguments>
+            <argument name="cacHelper" xsi:type="object">Wyomind\PickupAtStore\Helper\Data\Proxy</argument>
+            <argument name="configHelper" xsi:type="object">Wyomind\PickupAtStore\Helper\Config\Proxy</argument>
+        </arguments>
+    </type>
+
+</config>

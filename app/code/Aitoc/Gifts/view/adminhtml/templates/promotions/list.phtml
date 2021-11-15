@@ -1,0 +1,35 @@
+<?php
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+?>
+<?php
+/** @var \Aitoc\Gifts\Block\Adminhtml\Promotions\PromotionList $block */
+?>
+<div>
+    <?php foreach ($block->getActions() as $code => $action): ?>
+        <section class="admin__page-section">
+            <div class="admin__page-section-title"></div>
+            <div class="admin__page-section-content">
+                <div class="admin__page-section-item" style="float: left; width: calc( (100%) * 0.25 - 30px );">
+                    <div class="admin__page-section-item-title aitoc-fue-home-event-title">
+                        <span class="title"><?php echo $action['title'] ?></span>
+                    </div>
+                    <div class="admin__page-section-item-content aitoc-fue-home-event-desc">
+                        <div><?php echo $action['description'] ?></div>
+                    </div>
+                </div>
+                <div class="admin__page-section-item" style="float: right; width: calc( (100%) * 0.75 - 30px );">
+                    <div class="admin__page-section-item-content">
+                        <div id="aitoc_grid_<?php echo $code ?>">
+                            <?php echo $block->getGridHtml($code) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endforeach; ?>
+</div>
+

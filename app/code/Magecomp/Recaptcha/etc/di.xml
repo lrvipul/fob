@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Newsletter\Controller\Subscriber\NewAction">
+        <plugin name="MagecompNewsletterControllerSubscriberNewAction" type="Magecomp\Recaptcha\Plugin\NewsletterPlugin"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Controller\Account\CreatePost">
+        <plugin name="MagecompRecaptchaPluginCreatePostPlugin" type="Magecomp\Recaptcha\Plugin\CreatepostPlugin"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Review\Controller\Product\Post">
+        <plugin name="MagecompRecaptchaPluginReviewPlugin" type="Magecomp\Recaptcha\Plugin\ReviewPlugin"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Contact\Controller\Index\Post">
+        <plugin name="MagecompRecaptchaPluginContactPlugin" type="Magecomp\Recaptcha\Plugin\ContactPlugin"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Controller\Account\ForgotPasswordPost">
+        <plugin name="MagecompRecaptchaPluginForgotpasswordPlugin" type="Magecomp\Recaptcha\Plugin\ForgotpasswordPlugin"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Controller\Account\LoginPost">
+        <plugin name="MagecompLoginAccountLoginPost" type="Magecomp\Recaptcha\Plugin\LoginPost" sortOrder="10"/>
+    </type>
+</config>

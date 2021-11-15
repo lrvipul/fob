@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="Wyomind\PickupAtStore\Block\Widget\PreferredStore" id="wyomind_pickupatstore_preferred_store">
+        <label>Preferred Store</label>
+        <description></description>
+        <parameters>
+            <parameter name="display" sort_order="10" visible="true" xsi:type="select">
+                <label>Layout</label>
+                <options>
+                    <option name="1_column_store_list" value="1" selected="true">
+                        <label translate="true">1 column - Store List</label>
+                    </option>
+                    <option name="1_column_gmap" value="2">
+                        <label translate="true">1 column - Google Map</label>
+                    </option>
+                    <option name="2_columns" value="3">
+                        <label translate="true">2 columns - Store List and Google Map</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="automatic" sort_order="20" visible="true" xsi:type="select">
+                <label>Automatically select the nearest store if the customer doesn't have selected a preferred store yet?</label>
+                <options>
+                    <option name="yes" value="1">
+                        <label translate="true">Yes</label>
+                    </option>
+                    <option name="no" value="0" selected="true">
+                        <label translate="true">No</label>
+                    </option>
+                </options>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

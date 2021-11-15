@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+ * Copyright © 2016 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Core/etc/config.xsd">
+    <default>
+        <advancedinventory>
+            <license>
+                <extension_label>Advanced Inventory</extension_label>
+                <extension_version>7.7.6</extension_version>
+                <extension_code>ai</extension_code>
+                <get_online_license>1</get_online_license>
+            <activation_key>OVWBZ77P8PVNXO85Y</activation_key></license>
+            <settings>
+                <enabled>0</enabled>
+                <multiple_assignation_enabled>1</multiple_assignation_enabled>
+                <autoassign_order>1</autoassign_order>
+                <default_assignation_admin_order>-2</default_assignation_admin_order>
+                <order_notification>1</order_notification>
+                <order_notification_from_date>2000-01-01</order_notification_from_date>
+                <disallow_assignation_status>canceled,holded,complete,fraud,closed</disallow_assignation_status>
+                <pos_permissions>*</pos_permissions>
+                <auto_update_stock_status>0</auto_update_stock_status>
+                <display_tooltip>0</display_tooltip>
+                <tooltip_text><![CDATA[Check the availability in <span style="color: red;">our stores!</span>]]></tooltip_text>
+                <tooltip_size>200</tooltip_size>
+                <tooltip_position>left</tooltip_position>
+            </settings>
+            <system>
+                <log_enabled>1</log_enabled>
+                <journal_enabled>1</journal_enabled>
+                <journal_lifetime>15</journal_lifetime>
+                <permissions>{}</permissions>
+            </system>
+        </advancedinventory>
+    </default>
+
+</config>

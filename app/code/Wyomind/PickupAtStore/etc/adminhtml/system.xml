@@ -1,0 +1,570 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <!-- master tab -->
+
+        <tab id="wyomind" translate="label" sortOrder="1000000" class='wyomind-logo'>
+            <label>Wyomind</label>
+        </tab>
+
+        <!-- module tab -->
+        <section id="pickupatstore" translate="label" sortOrder="130" showInDefault="1" showInWebsite="0"
+                 showInStore="0">
+            <class>separator-top</class>
+            <label>Pickup At Store</label>
+            <tab>wyomind</tab>
+            <resource>Wyomind_PickupAtStore::pickupatstore_config</resource>
+            <!-- License -->
+
+            <group id="license" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>License</label>
+                <field id="extension_version" translate="label" type="label" sortOrder="1" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Extension version</label>
+                </field>
+                <field id="activation_key" translate="label comment" type="label" sortOrder="110" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Activation key</label>
+                    <frontend_model>Wyomind\Framework\Block\Adminhtml\System\Config\Form\Field\ActivationKey</frontend_model>
+                </field>
+                <field id="license_status" translate="label comment" type="label" sortOrder="110" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>License Status</label>
+                    <frontend_model>Wyomind\Framework\Block\Adminhtml\System\Config\Form\Field\LicenseStatus</frontend_model>
+                </field>
+            </group>
+
+        </section>
+
+
+        <section id="carriers" showInDefault="1" showInStore="1" showInWebsite="1" translate="label">
+            <resource>Wyomind_PickupAtStore::pickupatstore_config</resource>
+            <group id="pickupatstore" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="999"
+                   translate="label">
+                <label>Pickup At Store</label>
+                <field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label"
+                       type="select">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label"
+                       type="text">
+                    <label>Title</label>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+                <field id="handling_fee" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30"
+                       translate="label" type="text">
+                    <label>Global handling fee</label>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <comment>Special points of sale handling fee can be configured in the point of sale configuration
+                        page
+                    </comment>
+                </field>
+                <field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="40"
+                       translate="label" type="text">
+                    <label>Sort Order</label>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                </field>
+
+                <group id="backend" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="800" translate="label">
+                    <label>Magento Backend Settings</label>
+                    <field id="display_only_title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25" translate="label" type="select">
+                        <label>Display only the title in the shipping description of the order page</label>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                </group>
+
+                <group id="emails" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="900"
+                       translate="label">
+                    <label>Emails Settings</label>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+                    <field id="new_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10"
+                           translate="label" type="select">
+                        <label><![CDATA[Order confirmation email for the Pickup@Store method]]></label>
+                        <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                    </field>
+                    <field id="new_order_guest" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10"
+                           translate="label" type="select">
+                        <label><![CDATA[Order confirmation email for the Pickup@Store method (Guest)]]></label>
+                        <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                    </field>
+                    <field id="copy_to_pos" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25" translate="label" type="select">
+                        <label>Send a copy of the confirmation email to the point of sale selected for collecting the order?</label>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                </group>
+                <group id="preferred_store" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="800"
+                       translate="label">
+                    <label>Preferred Store</label>
+                    <field id="ask_for_registration" showInDefault="1" showInStore="1" showInWebsite="1"
+                           sortOrder="10" translate="label" type="select">
+                        <label>Ask for a preferred sotre when registering a custom account?</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                    <field id="edit_in_middle" showInDefault="1" showInStore="1" showInWebsite="1"
+                           sortOrder="20" translate="label" type="select">
+                        <label>Allow the customer to modify the preferred store in his dashboard?</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                </group>
+                <group id="settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="999"
+                       translate="label">
+                    <label>Display Settings</label>
+                    <depends>
+                        <field id="active">1</field>
+                    </depends>
+
+                    <field id="store_pickup_activated_default" showInDefault="1" showInStore="1" showInWebsite="1"
+                           sortOrder="10" translate="label" type="select">
+                        <label>Store pickup activated by default?</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                    </field>
+
+
+                    <field id="estimate_global" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20"
+                           translate="label" type="select">
+                        <label>Display a unique store pickup shipping method in the cart estimation</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                    </field>
+
+
+                    <field id="display_choice_block" showInDefault="1" showInStore="1" showInWebsite="1"
+                           sortOrder="25" translate="label" type="select">
+                        <label>Display a "Collect in store your order" block as the first step of the checkout?</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="dropdown" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30"
+                           translate="label" type="select">
+                        <label>Display the locations in a dropdown</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="active">1</field>
+                        </depends>
+                    </field>
+                    <field id="display_description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40"
+                           translate="label" type="select">
+                        <label>Display the description of the locations</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="active">1</field>
+                            <field id="dropdown">0</field>
+                        </depends>
+                    </field>
+                    <field id="display_list" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50"
+                           translate="label" type="select">
+                        <label>Display the stores list</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="dropdown">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="display_gmap" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60"
+                           translate="label" type="select">
+                        <label>Display the Google Map</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="dropdown">1</field>
+                        </depends>
+                    </field>
+
+                    <group id="date_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90"
+                           translate="label">
+                        <label>Date Settings</label>
+                        <depends>
+                            <field id="active">1</field>
+                            <field id="dropdown">1</field>
+                        </depends>
+                        <field id="date" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1"
+                               translate="label" type="select">
+                            <label>Allow the customer to choose the day to pickup the order</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                            </depends>
+                        </field>
+                        <field id="schedule_ahead" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10"
+                               translate="label" type="text">
+                            <label>Allow pickup method ahead</label>
+                            <comment>in days</comment>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                                <field id="date">1</field>
+                            </depends>
+                        </field>
+                        <field id="date_format" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20"
+                               translate="label" type="text">
+                            <label>Date format to display</label>
+                            <comment>
+                                <![CDATA[<span class="notice">Example : m/d/Y for 01/21/2014.
+    <br>
+        <br>
+            <style>
+                .date-format TD{
+                border:1px solid grey
+                }
+                .date-format .section{
+                background: none repeat scroll 0 0 #FC862E;
+                color: white;
+                font-weight: bold;
+                }
+               #estimateddeliverydate_settings .input-text, #estimateddeliverydate_settings .note{
+                width:90%;
+                }
+            </style>
+               
+            <table style="width:750px;border:1px solid grey" class='date-format' >
+                <caption>
+                    <strong>The following characters are recognized in the date format
+                </caption>
+        
+                <thead>
+                    <tr>
+                        <th>Character</th>
+                        <th>Description</th>
+                        <th>Returned values</th>
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class='section'>
+                        <td style="text-align: center;" colspan="3">Day</td>
+          
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>d</em>
+                        </td>
+                        <td>Day of the month, 2 digits with leading zeros</td>
+                        <td>
+                            <em>01</em> to <em>31</em>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>D</em>
+                        </td>
+                        <td>A textual representation of a day, three letters</td>
+                        <td>
+                            <em>Mon</em> through <em>Sun</em>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>j</em>
+                        </td>
+                        <td>Day of the month without leading zeros</td>
+                        <td>
+                            <em>1</em> to <em>31</em>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>l</em> (lowercase 'L')</td>
+                        <td>A full textual representation of the day of the week</td>
+                        <td>
+                            <em>Sunday</em> through <em>Saturday</em>
+                        </td>
+                    </tr>
+
+         
+
+                    <tr>
+                        <td>
+                            <em>S</em>
+                        </td>
+                        <td>English ordinal suffix for the day of the month, 2 characters</td>
+                        <td>
+                            <em>st</em>, <em>nd</em>, <em>rd</em> or
+                            <em>th</em>.  Works well with <em>j</em>
+                        </td>
+                    </tr>
+
+          
+
+        
+
+                    <tr class='section'>
+                        <td style="text-align: center;" colspan="3">Month</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>F</em>
+                        </td>
+                        <td>A full textual representation of a month, such as January or March</td>
+                        <td>
+                            <em>January</em> through <em>December</em>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>m</em>
+                        </td>
+                        <td>Numeric representation of a month, with leading zeros</td>
+                        <td>
+                            <em>01</em> through <em>12</em>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>M</em>
+                        </td>
+                        <td>A short textual representation of a month, three letters</td>
+                        <td>
+                            <em>Jan</em> through <em>Dec</em>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>n</em>
+                        </td>
+                        <td>Numeric representation of a month, without leading zeros</td>
+                        <td>
+                            <em>1</em> through <em>12</em>
+                        </td>
+                    </tr>
+
+         
+
+                    <tr class='section'>
+                        <td style="text-align: center;" colspan="3">Year</td>
+                    </tr>
+
+         
+
+                    <tr>
+                        <td>
+                            <em>Y</em>
+                        </td>
+                        <td>A full numeric representation of a year, 4 digits</td>
+                        <td>Examples: <em>1999</em> or <em>2003</em></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <em>y</em>
+                        </td>
+                        <td>A two digit representation of a year</td>
+                        <td>Examples: <em>99</em> or <em>03</em></td>
+                    </tr>
+
+         
+
+                </tbody>
+        
+            </table>
+</span>]]>
+                            </comment>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                                <field id="date">1</field>
+                            </depends>
+                        </field>
+                    </group>
+
+                    <group id="time_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100"
+                           translate="label">
+                        <label>Time Settings</label>
+                        <depends>
+                            <field id="time">1</field>
+                            <field id="active">1</field>
+                            <field id="dropdown">1</field>
+                            <field id="date">1</field>
+                        </depends>
+                        <field id="time" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1"
+                               translate="label" type="select">
+                            <label>Allow the customer to choose the time to pickup the order</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                                <field id="date">1</field>
+                            </depends>
+                        </field>
+                        <field id="time_range" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10"
+                               translate="label" type="text">
+                            <label>Pickup time range</label>
+                            <comment>in minutes (maximum 60mn)</comment>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                                <field id="date">1</field>
+                                <field id="time">1</field>
+                            </depends>
+                        </field>
+                        <field id="minimal_delay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20"
+                               translate="label" type="text">
+                            <label>Minimum time required to handle an order</label>
+                            <comment>in minutes</comment>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                                <field id="date">1</field>
+                                <field id="time">1</field>
+                            </depends>
+                        </field>
+                        <field id="minimal_delay_backorder" showInDefault="1" showInStore="1" showInWebsite="1"
+                               sortOrder="30" translate="label" type="text">
+                            <label>Minimum time required to handle a backorder</label>
+                            <comment>in minutes</comment>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                                <field id="date">1</field>
+                                <field id="time">1</field>
+                            </depends>
+                        </field>
+                        <field id="time_format" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40"
+                               translate="label" type="text">
+                            <label>Time format to display</label>
+                            <comment>
+                                <![CDATA[<span class="notice">Example : h:i A for 2:30 AM.
+    <br>
+        <br>
+            <style>
+                .date-format TD{
+                border:1px solid grey
+                }
+                .date-format .section{
+                background: none repeat scroll 0 0 #FC862E;
+                color: white;
+                font-weight: bold;
+                }
+               #estimateddeliverydate_settings .input-text, #estimateddeliverydate_settings .note{
+                width:90%;
+                }
+            </style>
+               
+            <table style="width:750px;border:1px solid grey" class='date-format' >
+                <caption>
+                    <strong>The following characters are recognized in the time format
+                </caption>
+        
+                <thead>
+                    <tr>
+                        <th>Character</th>
+                        <th>Description</th>
+                        <th>Returned values</th>
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    <tr class='section'>
+                        <td style="text-align: center;" colspan="3">Time</td>
+          
+                    </tr>
+ <tr><td><em>a</em> <td>Lowercase Ante meridiem and Post meridiem</td><td> 	<em>am</em> or <em>pm</em></td></tr>
+ <tr><td><em>A</em> 	 <td>Uppercase Ante meridiem and Post meridiem</td><td>  	<em>AM</em> or <em>PM</em></td></tr>
+ <tr><td><em>g</em> <td> 	12-hour format of an hour without leading zeros </td><td> 	<em>1</em> through <em>12</em></td></tr>
+ <tr><td><em>G</em> <td> 	24-hour format of an hour without leading zeros </td><td> 	<em>0</em> through <em>23</em></td></tr>
+ <tr><td><em>h</em> <td> 	12-hour format of an hour with leading zeros</td><td>  	<em>01</em> through <em>12</em></td></tr>
+ <tr><td><em>H</em> <td> 	24-hour format of an hour with leading zeros </td><td> 	<em>00</em> through <em>23</em></td></tr>
+ <tr><td><em>i</em> <td> 	Minutes with leading zeros </td><td> 	<em>00</em> to <em>59</em></td></tr>
+ <tr><td><em>s</em>  <td>	Seconds, with leading zeros </td><td> 	<em>00</em> through <em>59</em></td></tr>
+
+                   
+
+         
+
+                </tbody>
+        
+            </table>
+</span>]]>
+
+                            </comment>
+                            <depends>
+                                <field id="active">1</field>
+                                <field id="dropdown">1</field>
+                                <field id="date">1</field>
+                                <field id="time">1</field>
+                            </depends>
+                        </field>
+                    </group>
+
+
+                    <group id="labels" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1200"
+                           translate="label">
+                        <label>Labels</label>
+                        <field id="choice_title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10"
+                               translate="label" type="text">
+                            <label>Store pickup activation title</label>
+                            <depends>
+                                <field id="active">1</field>
+                            </depends>
+                            <tooltip><![CDATA[<div class="collect_in_store"></div>]]></tooltip>
+                        </field>
+                        <field id="shipping_address_title" showInDefault="1" showInStore="1" showInWebsite="1"
+                               sortOrder="20" translate="label" type="text">
+                            <label>Shipping address title</label>
+                            <depends>
+                                <field id="active">1</field>
+                            </depends>
+                            <tooltip><![CDATA[<div class="shipping_address"></div>]]></tooltip>
+                        </field>
+                        <field id="pickupatstore_title" showInDefault="1" showInStore="1" showInWebsite="1"
+                               sortOrder="30" translate="label" type="text">
+                            <label>Store choice title</label>
+                            <depends>
+                                <field id="active">1</field>
+                            </depends>
+                            <tooltip><![CDATA[<div class="pickupatstore"></div>]]></tooltip>
+                        </field>
+                        <field id="shipto_title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40"
+                               translate="label" type="text">
+                            <label>Ship to title</label>
+                            <depends>
+                                <field id="active">1</field>
+                            </depends>
+                            <tooltip><![CDATA[<div class="shipto"></div>]]></tooltip>
+                        </field>
+                    </group>
+
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

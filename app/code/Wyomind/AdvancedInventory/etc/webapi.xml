@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright Â© 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- Customer Group -->
+    <route url="/V1/stock/:productId" method="GET">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="getStockByProductId"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>
+    <route url="/V1/aiorder" method="GET">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="Magento_Sales::sales" />
+        </resources>
+    </route>
+    <route url="/V1/aiorders" method="GET">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Magento_Sales::sales" />
+        </resources>
+    </route>
+    <route url="/V1/pos" method="GET">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="getAllPointOfSaleAndWarehouse"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>
+    <route url="/V1/posbystoreid/:storeId" method="GET">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="getPointOfSaleAndWarehouseByStoreId"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>
+    <route url="/V1/assignations" method="GET">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="getAssignationByOrderId"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>
+
+    <route url="/V1/stockbyproductidandplaceids" method="POST">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="getStockByProductIdAndPlaceIds"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>  
+    <route url="/V1/stockbyproductidandstoreids" method="POST">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="getStockByProductIdAndStoreIds"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>  
+    <route url="/V1/updatestock" method="POST">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="updateStock"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>  
+    <route url="/V1/updateinventory" method="POST">
+        <service class="Wyomind\AdvancedInventory\Api\StockRepositoryInterface" method="updateInventory"/>
+        <resources>
+            <resource ref="Wyomind_AdvancedInventory::stocks"/>
+        </resources>
+    </route>  
+</routes>

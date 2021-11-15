@@ -1,0 +1,56 @@
+<?php if (
+        !in_array($this->getRequest()->getModuleName(), ["customer", "pickupatstore", "pointofsale", "checkout"])
+        || (in_array($this->getRequest()->getModuleName(), ["pickupatstore"]) && $block->getData('isWidget') === false)
+        || (in_array($this->getRequest()->getModuleName(), ["customer"]) && $block->getData('isWidget') === false)
+) : ?>
+
+    <?php
+    $helper = $this->helper('Wyomind\PointOfSale\Helper\Data');
+    echo $helper->getGoogleMapsApiScript();
+    ?>
+
+    <div class="preferred-store-widget">
+    <span class="preferred-store-label">
+        <?php echo __('Preferred store'); ?>
+    </span>
+        <span class="preferred-store-selected"></span>
+        <div class="find-a-store actions-primary" <?= ($block->getData('isWidget') === false)?'style="display:none;"':'' ?>>
+            <button class="action primary disabled" type="button" title="Find a store">
+                <span><?php echo __('Find a store'); ?></span>
+            </button>
+        </div>
+    </div>
+
+    <?php
+    $class = $block->getDisplay() == 1 || $block->getDisplay() == 3 ? "_list" : "";
+    $class .= $block->getDisplay() == 2 || $block->getDisplay() == 3 ? "_gmap" : "";
+    if ($class == "") $class = "_list";
+    ?>
+
+    <div id="preferred-store-popup" class="preferred-store-popup preferred-store-loading <?php echo $class; ?>">
+    </div>
+
+
+    <script type="text/x-magento-init">
+    {
+        ".find-a-store": {
+            "Wyomind_PickupAtStore/js/preferred-store":{
+                "widget" : <?= $block->getData('isWidget') === false ? 'false' : 'true' ?>,
+                "updatePreferredStoreUrl": "<?php echo $this->getUrl("pickupatstore/update/preferredStore"); ?>",
+                "modalPopup": {
+                    "element" : "#preferred-store-popup",
+                    "title" : "<?php echo __('Choose your preferred store'); ?>",
+                    "contentUrl": "<?php echo $block->getUrl("pickupatstore/section/gmap"); ?>"
+                },
+                "labels": {
+                    "noStoreSelected": "<?php echo __('No store selected'); ?>"
+                },
+                "autoSelect": <?php echo $block->getAutomatic()?"true":"false"; ?>
+            }
+        }
+    }
+
+
+    </script>
+
+<?php endif;

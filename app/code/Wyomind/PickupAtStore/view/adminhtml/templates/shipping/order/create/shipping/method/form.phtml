@@ -1,0 +1,231 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Method\Form */ ?>
+<?php $_shippingRateGroups = $block->getShippingRates(); ?>
+<?php $currentMethod = $block->getShippingMethod();?>
+<?php if ($_shippingRateGroups): ?>
+    <div id="order-shipping-method-choose" class="control" style="display:none">
+        <dl class="admin__order-shipment-methods">
+        <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
+            <dt class="admin__order-shipment-methods-title"><?= $block->escapeHtml($block->getCarrierName($code)) ?></dt>
+            <dd class="admin__order-shipment-methods-options">
+                <ul class="admin__order-shipment-methods-options-list">
+                <?php foreach ($_rates as $_rate): ?>
+                    <?php $_radioProperty = 'name="order[shipping_method]" type="radio" onclick="order.setShippingMethod(this.value)"' ?>
+                    <?php $_code = $_rate->getCode() ?>
+                    <li class="admin__field-option">
+                       <?php if ($_rate->getErrorMessage()): ?>
+                           <div class="messages">
+                               <div class="message message-error error">
+                                   <div><?= $block->escapeHtml($_rate->getErrorMessage()) ?></div>
+                               </div>
+                           </div>
+                       <?php else: ?>
+                            <?php $_checked = $block->isMethodActive($_code) ? 'checked="checked"' : '' ?>
+                            <input <?= /* @escapeNotVerified */ $_radioProperty ?> value="<?= /* @escapeNotVerified */ $_code ?>"
+                                                                 id="s_method_<?= /* @escapeNotVerified */ $_code ?>" <?= /* @escapeNotVerified */ $_checked ?>
+                                                                 class="admin__control-radio required-entry"/>
+                            <label class="admin__field-label" for="s_method_<?= /* @escapeNotVerified */ $_code ?>">
+                                <?= $block->escapeHtml($_rate->getMethodTitle() ? $_rate->getMethodTitle() : $_rate->getMethodDescription()) ?> -
+                                <strong>
+                                    <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
+                                    <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                                    <?= /* @escapeNotVerified */ $_excl ?>
+                                    <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                        (<?= /* @escapeNotVerified */ __('Incl. Tax') ?> <?= /* @escapeNotVerified */ $_incl ?>)
+                                    <?php endif; ?>
+                                </strong>
+                            </label>
+                       <?php endif ?>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            </dd>
+        <?php endforeach; ?>
+        </dl>
+    </div>
+    <?php if ($_rate = $block->getActiveMethodRate()): ?>
+        <div id="order-shipping-method-info" class="order-shipping-method-info">
+            <dl class="admin__order-shipment-methods">
+                <dt class="admin__order-shipment-methods-title">
+                    <?= $block->escapeHtml($block->getCarrierName($_rate->getCarrier())) ?>
+                </dt>
+                <dd class="admin__order-shipment-methods-options">
+                    <?= $block->escapeHtml($_rate->getMethodTitle() ? $_rate->getMethodTitle() : $_rate->getMethodDescription()) ?> -
+                    <strong>
+                        <?php $_excl = $block->getShippingPrice($_rate->getPrice(), $this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()); ?>
+                        <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                        <?= /* @escapeNotVerified */ $_excl ?>
+                        <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            (<?= /* @escapeNotVerified */ __('Incl. Tax') ?> <?= /* @escapeNotVerified */ $_incl ?>)
+                        <?php endif; ?>
+                    </strong>
+                <!-- PICKUPATSTORE -->
+                <?php if (stripos($currentMethod, "pickupatstore_") !== false): ?>
+                    <div id="order-shipping-method-info-pickup-datetime">
+                        <?php $button = false; ?>
+                        <?php if ($block->getConfig(\Wyomind\PickupAtStore\Helper\Config::DATE)): $button = true; ?>
+                            <select id="pas-date" name="pickup_day">
+                                <option value="" selected><?php echo __('Preferred day'); ?></option>
+                            </select>
+                            <?php if ($block->getConfig(\Wyomind\PickupAtStore\Helper\Config::TIME)): $button = true; ?>
+                            <select id="pas-time" name="pickup_hour">
+                                <option value=""><?php echo __('Preferred time'); ?></option>
+                            </select>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php if ($button): ?>
+                            <button class="disabled" type="button" id="save-pas-datetime">Save</button><br/><br/>
+                            <span class="notice" id="pickup-notice"></span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <!-- /PICKUPATSTORE -->
+                </dd>
+            </dl>
+            <a href="#"
+               onclick="$('order-shipping-method-info').hide();$('order-shipping-method-choose').show();return false"
+               class="action-default">
+                <span><?= /* @escapeNotVerified */ __('Click to change shipping method') ?></span>
+            </a>
+        </div>
+    <?php else: ?>
+        <script>
+require(['prototype'], function(){
+    $('order-shipping-method-choose').show();
+});
+</script>
+    <?php endif; ?>
+<?php elseif ($block->getIsRateRequest()): ?>
+    <div class="order-shipping-method-summary">
+        <strong class="order-shipping-method-not-available"><?= /* @escapeNotVerified */ __('Sorry, no quotes are available for this order.') ?></strong>
+    </div>
+<?php else: ?>
+    <div id="order-shipping-method-summary" class="order-shipping-method-summary">
+        <a href="#" onclick="order.loadShippingRates();return false" class="action-default">
+            <span><?= /* @escapeNotVerified */ __('Get shipping methods and rates') ?></span>
+        </a>
+        <input type="hidden" name="order[has_shipping]" value="" class="required-entry" />
+    </div>
+<?php endif; ?>
+<div style="display: none;" id="shipping-method-overlay" class="order-methods-overlay">
+    <span><?= /* @escapeNotVerified */ __('You don\'t need to select a shipping method.') ?></span>
+</div>
+<script>
+    require(["Magento_Sales/order/create/form"], function(){
+        order.overlay('shipping-method-overlay', <?php if ($block->getQuote()->isVirtual()): ?>false<?php else: ?>true<?php endif; ?>);
+        order.overlay('address-shipping-overlay', <?php if ($block->getQuote()->isVirtual()): ?>false<?php else: ?>true<?php endif; ?>);
+        <?php if ($block->getQuote()->isVirtual()): ?>
+            order.isOnlyVirtualProduct = true;
+        <?php endif; ?>
+    });
+</script>
+<!-- PICKUPATSTORE -->
+<?php if (stripos($currentMethod, "pickupatstore_") !== false): ?>
+<script>
+    var PickupAtStore = {};
+    require(["jquery"], function ($) {
+        $(function () {
+            if (!$('#order-shipping_same_as_billing').prop('checked')) {
+                $('#order-shipping_same_as_billing').trigger('click');
+            }
+            $('#order-shipping_address').css({"display":"none"});
+            PickupAtStore = {
+                updateShippingMethodUrl: '<?php echo $block->getUpdateShippingMethodUrl(); ?>',
+                /* List of all date/time available for each store */
+                datetimes: <?php echo json_encode($block->getDateTimes()); ?>,
+                useTime: <?php echo $block->getConfig(\Wyomind\PickupAtStore\Helper\Config::TIME); ?>,
+                /* Date and time selected for the store selected */
+                method: {
+                    date: '',
+                    time: ''
+                },
+                /* Update the date selector based on the selected point of sale */
+                updateDate: function () {
+                    var dates = PickupAtStore.datetimes[PickupAtStore.method.store].dates;
+                    for (var date in dates) {
+                        $("<option/>", {"value": date, "text": dates[date]}).appendTo("#pas-date");
+                    }
+                },
+                /* Update the time selector based on the selected point of sale and date */
+                updateTime: function () {
+                    $('#pas-time').children('option:not(:first)').remove();
+                    var hours = PickupAtStore.datetimes[PickupAtStore.method.store].hours[PickupAtStore.method.date];
+                    for (var hour in hours) {
+                        $('<option/>', {"value": hour, "text": hours[hour]}).appendTo('#pas-time');
+                    }
+                },
+                updateButton: function () {
+                    if ((PickupAtStore.method.date && PickupAtStore.method.time) || (PickupAtStore.method.date && PickupAtStore.useTime === 0)) {
+                        $("#save-pas-datetime").removeClass("disabled");
+                    } else {
+                        $("#save-pas-datetime").addClass("disabled");
+                    }
+                }
+            };
+
+            if ($("#pas-date").length > 0) {
+                var storeId = <?php echo str_replace('pickupatstore_pickupatstore_', '', $currentMethod); ?>;
+                PickupAtStore.method = {'store': storeId};
+                PickupAtStore.updateDate();
+                
+                $("#pas-date").on("change", function() {
+                    var selectedDate = $(this).val();
+                    if (selectedDate) {
+                        PickupAtStore.method.date = selectedDate;
+                        if (PickupAtStore.useTime === 1) {
+                            PickupAtStore.updateTime();
+                        } else {
+                            PickupAtStore.method.time = 0;
+                        }
+                    } else {
+                        PickupAtStore.method.date = 0;
+                    }
+                    PickupAtStore.updateButton();
+                });
+                
+                $("#pas-time").on("change", function() {
+                    var selectedTime = $(this).val();
+                    if (selectedTime) {
+                        PickupAtStore.method.time = selectedTime;
+                    } else {
+                        PickupAtStore.method.time = 0;
+                    }
+                    PickupAtStore.updateButton();
+                });
+                
+                $("#save-pas-datetime").on("click", function() {
+                    $.ajax({
+                        url: PickupAtStore.updateShippingMethodUrl,
+                        type: 'post',
+                        data: {data: PickupAtStore.method},
+                        showLoader: true,
+                        success: function (data) {
+                            $("#pickup-notice").addClass("message message-success success");
+                            $("#pickup-notice").html(data.message);
+                        },
+                        error: function (data) {
+                            alert(data);
+                        }
+                    });
+                });
+            }
+        });
+    });
+</script>
+<?php else: ?>
+    <script>
+        require(['jquery'], function($) {
+            $('#order-shipping_address').css({"display": "block"});
+        });
+    </script>
+<?php endif; ?>
+<!-- /PICKUPATSTORE -->

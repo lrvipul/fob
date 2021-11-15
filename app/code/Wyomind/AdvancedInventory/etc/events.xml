@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+ * Copyright © 2016 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Event/etc/events.xsd">
+
+    <!-- Standard checkout -->
+    <event name="checkout_submit_all_after">
+        <observer name="wyomind_advancedinventory_checkout_submit_all_after" instance="Wyomind\AdvancedInventory\Observer\CheckoutSubmitAllAfter" />
+    </event>
+    <!-- Paypal -->
+    <event name="paypal_express_place_order_success">
+        <observer name="wyomind_advancedinventory_checkout_submit_all_after" instance="Wyomind\AdvancedInventory\Observer\CheckoutSubmitAllAfter" />
+    </event>
+    <event name="paypal_ipn_submit_all_after">
+        <observer name="wyomind_advancedinventory_paypal_ipn_submit_all_after" instance="Wyomind\AdvancedInventory\Observer\CheckoutSubmitAllAfter" />
+    </event>
+    <!-- Ebizmart POS -->
+    <event name="pos_order_after_submit">
+        <observer name="wyomind_advancedinventory_checkout_submit_all_after" instance="Wyomind\AdvancedInventory\Observer\CheckoutSubmitAllAfter" />
+    </event>
+    <!-- M2ePro -->
+    <event name="ess_order_place_success">
+        <observer name="wyomind_advancedinventory_m2epro_submit_all_after" instance="Wyomind\AdvancedInventory\Observer\CheckoutSubmitAllAfter" />
+    </event>
+
+    <event name="sales_order_payment_cancel">
+        <observer name="wyomind_advancedinventory_sales_order_payment_cancel" instance="Wyomind\AdvancedInventory\Observer\SalesOrderPaymentCancel" />
+    </event>
+
+    <!-- authorize.net -->
+    <!--<event name="order_cancel_after">-->
+        <!--<observer name="wyomind_advancedinventory_order_cancel_after" instance="Wyomind\AdvancedInventory\Observer\OrderCancelAfter" />-->
+        <!--&lt;!&ndash; for Magento < 2.3, add a dispatch event in the file vendor/magento/module-authorizenet/Model/Directpost.php &ndash;&gt;-->
+        <!--&lt;!&ndash; method: declineOrder() &ndash;&gt;-->
+        <!--&lt;!&ndash; after $order->registerCancellation($message)->save(); &ndash;&gt;-->
+        <!--&lt;!&ndash; $this->_eventManager->dispatch('order_cancel_after', ['order' => $order ]); &ndash;&gt;-->
+    <!--</event>-->
+
+    <event name="sales_order_creditmemo_refund">
+        <observer name="wyomind_advancedinventory_sales_order_payment_cancel" instance="Wyomind\AdvancedInventory\Observer\SalesOrderCreditmemoRefund" />
+    </event>
+
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="inventory" disabled="true"/>
+        <observer name="wyomind_advancedinventory_observer_saveinventory" instance="Wyomind\AdvancedInventory\Observer\RefundOrderInventoryObserver"/>
+    </event>
+</config>

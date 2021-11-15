@@ -1,0 +1,39 @@
+<!--
+  ~ Copyright © 2019 Wyomind. All rights reserved.
+  ~ See LICENSE.txt for license details.
+  -->
+<div class="checkout-billing-address">
+
+    <div class="billing-address-same-as-shipping-block field choice" data-bind="visible: canUseShippingAddress()">
+        <!-- PICKUP AT STORE : afterRender-->
+        <input type="checkbox" name="billing-address-same-as-shipping"
+               afterRender="PickupAtStore.updateBillingAddress"
+               data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping-' + getCode($parent)}"/>
+        <!-- PICKUP AT STORE -->
+        <label data-bind="attr: {for: 'billing-address-same-as-shipping-' + getCode($parent)}">
+            <span data-bind="i18n: 'My billing and shipping address are the same'"></span>
+        </label>
+    </div>
+
+    <!-- PICKUPATSTORE adds a title in case pickup at store has been selected -->
+    <h4 id="pas-billing-address-title">Billing Address</h4>
+    <!-- PICKUPATSTORE -->
+
+    <!-- ko template: 'Magento_Checkout/billing-address/details' --><!-- /ko -->
+    <fieldset class="fieldset" data-bind="visible: !isAddressDetailsVisible()">
+        <!-- ko template: 'Magento_Checkout/billing-address/list' --><!-- /ko -->
+        <!-- ko template: 'Magento_Checkout/billing-address/form' --><!-- /ko -->
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action action-update" type="button" data-bind="click: updateAddress">
+                    <span data-bind="i18n: 'Update'"></span>
+                </button>
+                <button class="action action-cancel" type="button" data-bind="click: cancelAddressEdit">
+                    <span data-bind="i18n: 'Cancel'"></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+
+</div>
+

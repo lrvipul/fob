@@ -1,0 +1,14 @@
+<style>
+    .step-title.hide-number .title-number { display:none; }
+</style>
+<div class="step-title" data-role="title"><?php echo $block->getTitle(); ?></div>
+<div id="checkout-step-pas" class="pas-use step-content" data-role="content">
+    <div class="control">
+        <input type='radio' id="pas-yes" <?php if ($block->getStorePickupActivatedDefault() === "1") echo 'checked="checked"'; ?> onclick="PickupAtStore.showPickupAtStore(true);PickupAtStore.updateShippingMethod()" name='pickupatstore' value='1'/>
+        <span><?php echo __("Yes"); ?></span>
+    </div>
+    <div class="control">
+        <input type='radio' id="pas-no" <?php if ($block->getStorePickupActivatedDefault() !== "1") echo 'checked="checked"'; ?> onclick="PickupAtStore.showPickupAtStore(false);jQuery(jQuery('[name^=ko_unique_]')[0]).trigger('click');"  name='pickupatstore' value='0'/>
+        <span><?php echo __("No"); ?></span>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+  Copyright © 2019 Wyomind. All rights reserved.
+  See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <pointofsale>
+            <license>
+                <extension_label>Point Of Sale</extension_label>
+                <extension_version>7.2.5</extension_version>
+                <extension_code>pos</extension_code>
+                <get_online_license>1</get_online_license>
+            <activation_key>HR9CW25DN94I4K8ZV</activation_key></license>
+            <settings>
+                <pattern><![CDATA[{{image}}
+{{address_1}}
+{{address_2}}
+{{zipcode}} {{city}}
+{{country}} {{state}}
+☎ {{phone}}
+✉ {{email}}
+<p style="margin-top:10px">{{hours}}</p>]]></pattern>
+                <display_distance>1</display_distance>
+                <display_duration>1</display_duration>
+                <unit_system>0</unit_system>
+                <time>h:i A</time>
+                <display_x_first_pos>0</display_x_first_pos>
+            </settings>
+        </pointofsale>
+    </default>
+</config>

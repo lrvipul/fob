@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aitoc_gifts_rule_grid_data_source" xsi:type="string">Aitoc\Gifts\Model\ResourceModel\Rule\Grid\Collection</item>
+                <item name="aitoc_gifts_statistic_grid_data_source" xsi:type="string">Aitoc\Gifts\Model\ResourceModel\Statistic\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Aitoc\Gifts\Model\ResourceModel\Rule\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">aitoc_gifts_rule</argument>
+            <argument name="resourceModel" xsi:type="string">Aitoc\Gifts\Model\ResourceModel\Rule</argument>
+        </arguments>
+    </virtualType>
+    <type name="Aitoc\Gifts\Model\Pool\Action">
+        <arguments>
+            <argument name="actions" xsi:type="array">
+                <item name="promotion_group" xsi:type="array">
+                    <item name="title" xsi:type="string">Gift For Each Condition Match</item>
+                    <item name="description" xsi:type="string">
+                        Add specified bonus item(s) to the cart for every matched condition.
+                    </item>
+                    <item name="step" xsi:type="string">0</item>
+                    <item name="conditions" xsi:type="string">1</item>
+                    <item name="sort_order" xsi:type="string">10</item>
+                    <item name="action_processor" xsi:type="object">Aitoc\Gifts\Model\Rule\Action\PromotionGroupAction</item>
+                </item>
+                <item name="whole_cart" xsi:type="array">
+                    <item name="title" xsi:type="string">Gift For Matched Cart Condition</item>
+                    <item name="description" xsi:type="string">
+                        Add specified item(s) to the cart if a given cart condition is matched.
+                    </item>
+                    <item name="step" xsi:type="string">1</item>
+                    <item name="conditions" xsi:type="string">0</item>
+                    <item name="sort_order" xsi:type="string">20</item>
+                    <item name="action_processor" xsi:type="object">Aitoc\Gifts\Model\Rule\Action\WholeCartAction</item>
+                </item>
+                <item name="amount_cart" xsi:type="array">
+                    <item name="title" xsi:type="string">Gift For Total Cart Amount</item>
+                    <item name="description" xsi:type="string">
+                        Add specified item(s) to the cart based on a cart amount condition.
+                    </item>
+                    <item name="step" xsi:type="string">0</item>
+                    <item name="conditions" xsi:type="string">1</item>
+                    <item name="sort_order" xsi:type="string">30</item>
+                    <item name="action_processor" xsi:type="object">Aitoc\Gifts\Model\Rule\Action\AmountCartAction</item>
+                </item>
+                <item name="extra_qty" xsi:type="array">
+                    <item name="title" xsi:type="string">Extra Quantity</item>
+                    <item name="description" xsi:type="string">
+                        Give an additional amount of the specified item based on special terms.
+                    </item>
+                    <item name="step" xsi:type="string">1</item>
+                    <item name="conditions" xsi:type="string">1</item>
+                    <item name="sort_order" xsi:type="string">40</item>
+                    <item name="action_processor" xsi:type="object">Aitoc\Gifts\Model\Rule\Action\ExtraQtyAction</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\SalesRule\Model\Validator">
+        <plugin name="Aitoc_Gifts::Discount" type="Aitoc\Gifts\Plugin\Quote\DiscountApply"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item">
+        <plugin name="Aitoc_Gifts::QuoteItem" type="Aitoc\Gifts\Plugin\Quote\Item"/>
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\CouponPost">
+        <plugin name="Aitoc_Gifts::Coupon_Post" type="Aitoc\Gifts\Plugin\Checkout\Controller\Cart\CouponPost"/>
+    </type>
+    <type name="Magento\Framework\View\Element\AbstractBlock">
+        <plugin name="Aitoc_Gifts::Escapehtml_fix" type="Aitoc\Gifts\Plugin\Checkout\Block\Cart\ProductName"/>
+    </type>
+</config>

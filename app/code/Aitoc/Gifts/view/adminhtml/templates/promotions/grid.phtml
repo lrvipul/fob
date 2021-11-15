@@ -1,0 +1,146 @@
+<?php
+/**
+ * @author Aitoc Team
+ * @copyright Copyright (c) 2020 Aitoc (https://www.aitoc.com)
+ * @package Aitoc_Gifts
+ */
+?>
+<?php
+/**
+ * @var \Aitoc\Gifts\Block\Adminhtml\Promotions\Grid $block
+ */
+$numColumns = sizeof($block->getColumns());
+?>
+<?php if ($block->getCollection()): ?>
+    <?php if ($block->canDisplayContainer()): ?>
+
+        <div id="<?php echo $block->getId() ?>" data-grid-id="<?php echo $block->getId() ?>">
+    <?php else: ?>
+        <?php echo $block->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
+    <?php endif; ?>
+
+    <div class="aitoc-grid-style">
+        <table class="data-grid" id="<?php echo $block->getId() ?>_table">
+            <?php if ($block->getHeadersVisibility()): ?>
+                <thead>
+                    <?php if ($block->getHeadersVisibility()): ?>
+                        <tr class="aitoc-head-grid">
+                            <?php foreach ($block->getColumns() as $_column): ?>
+                                <?php if ($_column->getHeaderHtml() == '&nbsp;'):?>
+                                    <th class="data-grid-th aitoc-data-grid" data-column="<?php echo $_column->getId() ?>"
+                                        <?php echo $_column->getHeaderHtmlProperty() ?>>&nbsp;</th>
+                                <?php else: ?>
+                                    <?php echo $_column->getHeaderHtml()?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endif; ?>
+                </thead>
+            <?php endif; ?>
+
+            <tbody>
+                <?php if (($block->getCollection()->getSize() > 0) && (!$block->getIsCollapsed())): ?>
+                    <?php foreach ($block->getCollection() as $_index => $_item): ?>
+                        <tr title="<?= /* @noEscape */ $block->getRowUrl($_item) ?>" class="aitoc-grid-row _clickable <?php if ($block->isRowDisabled($_item)): ?>row-disabled<?php endif; ?>" data-role="row">
+                            <?php
+                            $i = 0;
+                            foreach ($block->getColumns() as $_column):
+                                if ($block->shouldRenderCell($_item, $_column)):?>
+                                    <td class="<?php echo $_column->getCssProperty() ?>">
+                                        <?php echo(($_html = $_column->getRowField($_item)) != '' ? $_html : '&nbsp;') ?>
+                                    </td>
+                                    <?php if ($block->shouldRenderEmptyCell($_item, $_column)): ?>
+                                        <td class="last"><?php echo $block->getEmptyCellLabel() ?></td>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php elseif ($block->getEmptyText()): ?>
+                    <tr class="data-grid-tr-no-data">
+                        <td class="<?php echo $block->getEmptyTextClass() ?>"
+                            colspan="<?php echo $numColumns ?>"><?php echo $block->getEmptyText() ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+            <div class="admin__data-grid-pager">
+                <?php $_curPage = $block->getCollection()->getCurPage() ?>
+                <?php $_lastPage = $block->getCollection()->getLastPageNumber() ?>
+                <?php if ($_curPage > 1) : ?>
+                    <button class="action-previous"
+                            type="button"
+                            onclick="<?= /* @noEscape */ $block->getJsObjectName() ?>.setPage('<?= /* @noEscape */ ($_curPage - 1) ?>');return false;">
+                        <span><?= $block->escapeHtml(__('Previous page')) ?></span>
+                    </button>
+                <?php else : ?>
+                    <button type="button" class="action-previous disabled"><span><?= $block->escapeHtml(__('Previous page')) ?></span></button>
+                <?php endif; ?>
+                <input type="text"
+                       id="<?= /* @noEscape */ $block->getHtmlId() ?>_page-current"
+                       name="<?= $block->escapeHtmlAttr($block->getVarNamePage()) ?>"
+                       value="<?= $block->escapeHtmlAttr($_curPage) ?>"
+                       class="admin__control-text"
+                       onkeypress="<?= /* @noEscape */ $block->getJsObjectName() ?>.inputPage(event, '<?= /* @noEscape */ $_lastPage ?>')" <?= /* @noEscape */ $block->getUiId('current-page') ?> />
+                <label class="admin__control-support-text" for="<?= /* @noEscape */ $block->getHtmlId() ?>_page-current">
+                    <?= /* @noEscape */ __('of %1', '<span>' . $block->getCollection()->getLastPageNumber() . '</span>') ?>
+                </label>
+                <?php if ($_curPage < $_lastPage) : ?>
+                    <button type="button"
+                            title="<?= $block->escapeHtmlAttr(__('Next page')) ?>"
+                            class="action-next"
+                            onclick="<?= /* @noEscape */ $block->getJsObjectName() ?>.setPage('<?= /* @noEscape */ ($_curPage + 1) ?>');return false;">
+                        <span><?= $block->escapeHtml(__('Next page')) ?></span>
+                    </button>
+                <?php else : ?>
+                    <button type="button" class="action-next disabled"><span><?= $block->escapeHtml(__('Next page')) ?></span></button>
+                <?php endif; ?>
+            </div>
+
+            <?php if ($block->canDisplayContainer()): ?>
+                <script>
+                    var deps = [];
+
+                    <?php if ($block->getDependencyJsObject()): ?>
+                    deps.push('uiRegistry');
+                    <?php endif; ?>
+
+                    <?php if (strpos($block->getRowClickCallback(), 'order.') !== false): ?>
+                    deps.push('Magento_Sales/order/create/form');
+                    <?php endif; ?>
+
+                    deps.push('mage/adminhtml/grid');
+
+                    require(deps, function(<?= ($block->getDependencyJsObject() ? 'registry' : '') ?>){
+                        <?php //TODO: getJsObjectName and getRowClickCallback has unexpected behavior. Should be removed ?>
+
+                        <?php if ($block->getDependencyJsObject()): ?>
+                        registry.get('<?= /* @noEscape */ $block->getDependencyJsObject() ?>', function (<?= /* @noEscape */ $block->getDependencyJsObject() ?>) {
+                            <?php endif; ?>
+
+                            <?= /* @noEscape */ $block->getJsObjectName() ?> = new varienGrid('<?= /* @noEscape */ $block->getId() ?>', '<?= /* @noEscape */ $block->getGridUrl() ?>', '<?= /* @noEscape */ $block->getVarNamePage() ?>', '<?= /* @noEscape */ $block->getVarNameSort() ?>', '<?= /* @noEscape */ $block->getVarNameDir() ?>', '<?= /* @noEscape */ $block->getVarNameFilter() ?>');
+                            <?= /* @noEscape */ $block->getJsObjectName() ?>.useAjax = '<?= /* @noEscape */ $block->getUseAjax() ?>';
+                            <?php if ($block->getRowClickCallback()): ?>
+                            <?= /* @noEscape */ $block->getJsObjectName() ?>.rowClickCallback = <?= /* @noEscape */ $block->getRowClickCallback() ?>;
+                            <?php endif; ?>
+                            <?php if ($block->getCheckboxCheckCallback()): ?>
+                            <?= /* @noEscape */ $block->getJsObjectName() ?>.checkboxCheckCallback = <?= /* @noEscape */ $block->getCheckboxCheckCallback() ?>;
+                            <?php endif; ?>
+                            <?php if ($block->getRowInitCallback()): ?>
+                            <?= /* @noEscape */ $block->getJsObjectName() ?>.initRowCallback = <?= /* @noEscape */ $block->getRowInitCallback() ?>;
+                            <?= /* @noEscape */ $block->getJsObjectName() ?>.rows.each(function(row){<?= /* @noEscape */ $block->getRowInitCallback() ?>(<?= /* @noEscape */ $block->getJsObjectName() ?>, row)});
+                            <?php endif; ?>
+                            <?php if ($block->getMassactionBlock()->isAvailable()): ?>
+                            <?= /* @noEscape */ $block->getMassactionBlock()->getJavaScript() ?>
+                            <?php endif ?>
+
+                            <?php if ($block->getDependencyJsObject()): ?>
+                        });
+                        <?php endif; ?>
+
+                    });
+                </script>
+            <?php endif; ?>
+<?php endif ?>

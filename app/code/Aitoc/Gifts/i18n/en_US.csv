@@ -1,0 +1,142 @@
+General,General
+"Create Rule","Create Rule"
+"Create %1 Rule","Create %1 Rule"
+"Promotional Rules","Promotional Rules"
+Statistics,Statistics
+Settings,Settings
+Guide,Guide
+"We couldn't find any records.","We couldn't find any records."
+Name,Name
+"From Date","From Date"
+"To Date","To Date"
+"Store View","Store View"
+"Coupon Type","Coupon Type"
+"Coupon Code","Coupon Code"
+"Discount Type","Discount Type"
+"Discount Amount","Discount Amount"
+"Cart Amount","Cart Amount"
+"Stop Rule Processing","Stop Rule Processing"
+"Created At","Created At"
+Activity,Activity
+Deactivate,Deactivate
+Activate,Activate
+Delete,Delete
+"This rule will be deleted! Are you sure?","This rule will be deleted! Are you sure?"
+Save,Save
+"Save & Continue","Save & Continue"
+"Save & Duplicate","Save & Duplicate"
+"Save & New","Save & New"
+Rules,Rules
+"<br/>Cart Item Actions <br/>
+                     Apply the rule only to cart items matching the following conditions (leave blank for all items).","<br/>Cart Item Actions <br/>
+                     Apply the rule only to cart items matching the following conditions (leave blank for all items)."
+Conditions,Conditions
+"Cart Conditions","Cart Conditions"
+"Manage Coupon Codes","Manage Coupon Codes"
+"Coupon Qty","Coupon Qty"
+"Code Length","Code Length"
+"Excluding prefix, suffix and separators.","Excluding prefix, suffix and separators."
+"Code Format","Code Format"
+"Dash Every X Characters","Dash Every X Characters"
+"If empty no separation.","If empty no separation."
+Generate,Generate
+"Expiration Date","Expiration Date"
+Created,Created
+CSV,CSV
+"Excel XML","Excel XML"
+"Are you sure you want to delete the selected coupon(s)?","Are you sure you want to delete the selected coupon(s)?"
+Marketing,Marketing
+Analytics,Analytics
+"ERP Dashboard","ERP Dashboard"
+"Rule doesn't exist.","Rule doesn't exist."
+"Rule has been successfully %1","Rule has been successfully %1"
+"Unable to find the rule","Unable to find the rule"
+"Rule has been successfully deleted","Rule has been successfully deleted"
+"Edit Rule","Edit Rule"
+"New Rule","New Rule"
+"Rule is not defined","Rule is not defined"
+"%1 coupon(s) have been generated.","%1 coupon(s) have been generated."
+"Invalid data provided","Invalid data provided"
+"Something went wrong while generating coupons. Please review the log and try again.","Something went wrong while generating coupons. Please review the log and try again."
+"Rule has been successfully saved","Rule has been successfully saved"
+"You duplicated the rule.","You duplicated the rule."
+"Unable to save the rule","Unable to save the rule"
+"We cannot create the requested Coupon Qty. Please check your settings and try again.","We cannot create the requested Coupon Qty. Please check your settings and try again."
+"We can't add this FREE item to your shopping cart right now.","We can't add this FREE item to your shopping cart right now."
+"GIFT Item was added to your shopping cart. Item SKU: %1, Qty: %2","GIFT Item was added to your shopping cart. Item SKU: %1, Qty: %2"
+" %1"," %1"
+None,None
+"Auto Generation","Auto Generation"
+"Use Sales Rule ID","Use Sales Rule ID"
+"Discount Percent","Discount Percent"
+"All Items","All Items"
+"One of the Item","One of the Item"
+"You used coupon code ""%1"".","You used coupon code ""%1""."
+Simple,Simple
+Virtual,Virtual
+Downloadable,Downloadable
+Inactive,Inactive
+Active,Active
+Edit,Edit
+"Promotional Products","Promotional Products"
+"All Promotional Items to which the discount is applied.","All Promotional Items to which the discount is applied."
+"Add Promotional Products","Add Promotional Products"
+Cancel,Cancel
+"Add Selected Products","Add Selected Products"
+Remove,Remove
+ID,ID
+Thumbnail,Thumbnail
+Status,Status
+"Attribute Set","Attribute Set"
+SKU,SKU
+Price,Price
+Continue,Continue
+"Aitoc: Promo Products","Aitoc: Promo Products"
+"Promo Products by Aitoc","Promo Products by Aitoc"
+Gifts,Gifts
+"General Settings","General Settings"
+"Gift Items Settings","Gift Items Settings"
+"Gift Name Postfix","Gift Name Postfix"
+Action,Action
+"Number of Orders","Number of Orders"
+"Number of Completed Orders","Number of Completed Orders"
+Rule,Rule
+Back,Back
+"Rule Information","Rule Information"
+Enabled,Enabled
+"Rule Name","Rule Name"
+Description,Description
+Stores,Stores
+"Customer Groups","Customer Groups"
+Priority,Priority
+"Use Coupon From Cart Rule","Use Coupon From Cart Rule"
+"Rule Type","Rule Type"
+Amount,Amount
+Percent,Percent
+"Set zero to giveaway product for free.","Set zero to giveaway product for free."
+"
+                        Possible use a ""-"" character for negative percent discount.
+                    ","
+                        Possible use a ""-"" character for negative percent discount.
+                    "
+"Discount Percent (%)","Discount Percent (%)"
+"How many free items the discount is applied To.","How many free items the discount is applied To."
+"Qty Discount is Applied To","Qty Discount is Applied To"
+"Discount Step (Each X)","Discount Step (Each X)"
+"Get X GIFT Items for Every Spent Amount.","Get X GIFT Items for Every Spent Amount."
+"Spent Amount","Spent Amount"
+"Conditions and Actions","Conditions and Actions"
+"Cart Item Actions","Cart Item Actions"
+Coupons,Coupons
+"Coupon Generation","Coupon Generation"
+"Add Rule","Add Rule"
+"Delete rules","Delete rules"
+"Delete selected rules?","Delete selected rules?"
+"Change status","Change status"
+"Action Name","Action Name"
+"Discount Qty","Discount Qty"
+"Discount Step","Discount Step"
+Store,Store
+AttributeSetText,AttributeSetText
+StatusText,StatusText
+Type,Type

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+ * Copyright © 2019 Wyomind. All rights reserved.
+ * See LICENSE.txt for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Event/etc/events.xsd">
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="pickupatstore_sales_model_service_quote_submit_before" instance="Wyomind\PickupAtStore\Observer\SalesModelServiceQuoteSubmitBefore" />
+    </event>
+    <event name="sales_order_place_before">
+        <observer name="pickupatstore_sales_order_place_before" instance="Wyomind\PickupAtStore\Observer\SalesOrderPlaceBefore"/>
+    </event>
+    
+</config>

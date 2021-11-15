@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Wyomind_PickupAtStore" setup_version="6.2.1">
+        <sequence>
+            <module name="Magento_Checkout"/>
+            <module name="Wyomind_Framework"/>
+            <module name="Wyomind_PointOfSale"/>
+        </sequence>
+    </module>
+</config>
+ 

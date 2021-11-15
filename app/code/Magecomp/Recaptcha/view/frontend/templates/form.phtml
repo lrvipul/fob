@@ -1,0 +1,31 @@
+<div class="captcha" style="margin:10px 0px">
+    <div class="g-recaptcha-response" id="g-recaptcha-contact" data-theme="<?php echo $block->getThemeOption(); ?>"
+         data-sitekey="<?php echo $block->getSiteKey(); ?>"></div>
+    <div id="g_recaptcha-error" style="display: none; color: #e02b27; font-size: 1.2rem;" generated="true">
+        <?php echo __('This is a required field.') ?>
+    </div>
+</div>
+
+<script src='https://www.google.com/recaptcha/api.js?onload=reCaptchaCallbackGeneral&render=explicit&hl=<?php echo $block->getLocal(); ?>'></script>
+<script type="text/javascript">
+    var custmerSubmit = false;
+    function reCaptchaVerifyGeneral(response) {
+        if (response) {
+            custmerSubmit = true;
+        }
+    }
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+        if (!custmerSubmit) {
+            jQuery('#g_recaptcha-error').show();
+            e.preventDefault();
+        }
+    });
+
+    function reCaptchaCallbackGeneral() {
+        grecaptcha.render('g-recaptcha-contact', {
+            'sitekey': '<?php echo $block->getSiteKey(); ?>',
+            'callback': reCaptchaVerifyGeneral,
+            'theme': '<?php echo $block->getThemeOption(); ?>'
+        });
+    }
+</script>
