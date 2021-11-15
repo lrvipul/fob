@@ -1,0 +1,39 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .breadcrumbs {
+        .lib-breadcrumbs();
+		margin:0;
+		
+		.items{
+			margin-bottom: 55px;
+			padding:@indent__l 0 0;
+			//text-align:center;
+		    letter-spacing: 1px;
+    		font-family: "Futura PT";
+    		.item:not(:last-child):after {
+    			font-size: 14px;
+    			margin: 0;
+    		}
+		}
+    }
+}
+
+.breadcrumbs .items > li{ letter-spacing:0.5px; vertical-align:middle; font-size:14px; font-family: 'Futura PT Book'; }
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .breadcrumbs {
+        display: none;
+    }
+}

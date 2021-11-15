@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<small class="copyright">    
+    <span class="f-left">
+		<?php /* @escapeNotVerified */ echo $block->getCopyright() ?>		
+	</span>						
+</small>
+
+<!------for safari browser version 12.1.2------>
+<style type="text/css">  
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .footer.content .row{display: block !important; }
+	.footer-top-ads .row {display: block !important; }  
+}
+</style>

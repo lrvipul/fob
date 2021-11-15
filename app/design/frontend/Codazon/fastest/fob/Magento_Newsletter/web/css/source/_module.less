@@ -1,0 +1,119 @@
+// /**
+//  * Copyright © 2015 Magento. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+
+//
+//    Newsletter subscription
+//--------------------------------------
+
+.block.newsletter {
+    margin-bottom: 20px;
+    .form.subscribe {
+        position: relative;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .fieldset {
+        display: table-cell;
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+    }
+    .field {
+        .control {
+            display: block;
+			.rtl-layout &{
+				&:before {
+					margin-left:0;
+					margin-right:8px;
+				}
+			}
+        }
+    }
+     input {
+		height:55px;
+		line-height: 55px;
+        border-radius: 5px;
+        padding: 0 100px 0 20px;
+        font-size: 14px;
+        letter-spacing: 1px;
+        color: #666666;
+        font-family: "Futura PT";
+		.rtl-layout &{
+			padding-right: 35px;
+			padding-left: 10px;
+		}
+    }
+	input[type="email"] {
+		.lib-css(background, #ffffff);
+		.lib-css(color, #666666);
+		
+	}
+    .title {
+        display: none;
+    }
+    .label {
+        &:extend(.abs-visually-hidden all);
+    }
+    .actions {
+		button{
+			padding:8px 20px;
+            margin: 0;
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            border-radius: 0 2px 2px 0;
+            background-color: #6eb85c!important;
+            color: #fff!important;
+            border: none;
+            font-size: 0;
+            line-height: 51px;
+            height: 51px;
+            width: 92px;
+            padding: 0;
+            &:before {
+                content: '\f1d8';
+                font-size: 36px;
+                font-family: FontAwesome;
+            }
+		}
+    }
+}
+
+}
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .block.newsletter {
+        width: 100%;
+    }
+}
+
+//Custom style newsletter
+
+.newsletter-style02{
+	.block.newsletter{ 
+		margin-bottom:@indent__base;
+		input{
+			border-width:1px;
+			border-color:@main_border;
+			text-align:center;
+		}
+		.field{
+			margin-bottom:20px;
+			.control:before{display:none;}
+		}
+		.actions{
+			display:block; width:100%;
+		}
+	}
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="checkout" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <link src="Wyomind_PickupAtStore::js/checkStep.js"/>
+        <css src="Wyomind_PointOfSale::css/pointofsale.css"/>
+        <css src="Wyomind_PickupAtStore::css/pickupatstore.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content.top">
+            <block class="Wyomind\PickupAtStore\Block\PickupAtStore" name="pickupatstore" before="-" template="Wyomind_PickupAtStore::pickupatstore_iwd_osc.js.phtml"/>
+        </referenceContainer>
+
+        <referenceBlock name="paypal.express.review" template="Wyomind_PickupAtStore::express/review.phtml"/>
+    </body>
+</page>

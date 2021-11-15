@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceContainer name="header.panel">
+			<block class="Magento\Cms\Block\Block" name="header.social.media" before="-">
+				<arguments>
+					<argument name="block_id" xsi:type="string">social_media</argument>
+				</arguments>
+			</block>
+		</referenceContainer>
+		<referenceBlock name="logo">
+			<arguments>
+				<argument name="logo_img_width" xsi:type="number">380</argument>
+				<argument name="logo_img_height" xsi:type="number">131</argument>
+			</arguments>
+		</referenceBlock>
+
+		<referenceBlock name="header.links">
+			<block class="Magento\Framework\View\Element\Html\Link" name="signin-link" before="register-link">
+				<arguments>
+					<argument name="label" xsi:type="string" translate="true">Sign In</argument>
+					<argument name="path" xsi:type="string" translate="true">customer/account/login</argument>
+				</arguments>
+			</block>
+			<block class="Magento\Framework\View\Element\Html\Link" name="delivery-link">
+				<arguments>
+					<argument name="label" xsi:type="string" translate="true">Delivery Info</argument>
+					<argument name="path" xsi:type="string" translate="true">delivery-information</argument>
+				</arguments>
+			</block>
+			<block class="Magento\Framework\View\Element\Html\Link" name="loyalty.faq">
+				<arguments>
+					<argument name="label" xsi:type="string" translate="true">Loyalty</argument>
+					<argument name="path" xsi:type="string" translate="true">loyalty-faq</argument>
+				</arguments>
+			</block>
+		</referenceBlock>
+		<referenceContainer name="header.wrapper.content">
+			<container name="header.main.content" htmlClass="header content" htmlTag="div">
+				<container name="header.main.content.right" htmlClass="header-right" htmlTag="div" />
+			</container>
+		</referenceContainer>
+
+		<referenceContainer name="footer.content.bottom">
+			<container name="footer.custom.center" htmlTag="div" htmlClass="footer-custom-center" before="footer.custom.block">
+				<block class="Magento\Cms\Block\Block" name="Fob.footer.bottom.payment.center">
+				    <arguments>
+				        <argument name="block_id" xsi:type="string">Fob-footer-bottom-payment-center</argument>
+				    </arguments>
+				</block>
+			</container>
+		</referenceContainer>
+
+		<referenceBlock name="header.wrapper.center" remove="true" />
+		<referenceBlock name="header.wrapper.left" remove="true" />
+		<referenceBlock name="header.wrapper.right" remove="true" />
+		<referenceBlock name="header.panel.store" remove="true" />
+		<referenceBlock name="mobile.search" remove="true" />
+		<!-- <referenceBlock name="register-link" remove="true" />
+		<referenceBlock name="wish-list-link" remove="true" /> -->
+		<referenceBlock name="catalog.compare.link" remove="true" />
+		<referenceBlock name="header.store.locator" remove="true" />
+		<referenceBlock name="header.our.story" remove="true" />
+		<move element="register-link" destination="header.links" after="signin-link" />
+		<move element="logo" destination="header.main.content" before="-" />
+		<move element="top.search" destination="header.main.content.right" before="-" />
+		<move element="authorization-link-login" destination="header.main.content.right" after="top.search" />
+		<move element="minicart" destination="header.main.content.right" />
+	</body>
+</page>

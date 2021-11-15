@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.main">
+            <container name="product.info.left" htmlTag="div" htmlClass="product-info-left" before="-">
+            	<container name="product.top.info" htmlTag="div" htmlClass="product-top-info" before="-" />
+            	<container name="product.bottom.info" htmlTag="div" htmlClass="product-bottom-info" after="-" />
+            </container>
+            <container name="product.info.right" htmlTag="div" htmlClass="product-info-right" after="-">
+                <block class="Wyomind\PointOfSale\Block\StoreStock" name="store_stock" template="Wyomind_PointOfSale::store_stock.phtml"/>
+                <!-- <block class="Magento\Cms\Block\Block" name="product_right_info">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">product_right_info</argument>
+                    </arguments>
+                </block> -->
+            </container>
+            <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.brand" template="Magento_Catalog::product/view/attribute.phtml" after="product.info.type">
+                <arguments>
+                    <argument name="at_call" xsi:type="string">getManufacturer</argument>
+                    <argument name="at_code" xsi:type="string">manufacturer</argument>
+                    <argument name="css_class" xsi:type="string">manufacturer</argument>
+                    <argument name="at_label" xsi:type="string">Brand</argument>
+                    <argument name="at_type" xsi:type="string">text</argument>
+                    <argument name="add_attribute" xsi:type="string">itemprop="manufacturer"</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceBlock name="product.info.sku" template="product/view/attribute.phtml">
+			<arguments>
+	            <argument name="at_label" translate="true" xsi:type="string">Product Code</argument>
+	        </arguments>
+		</referenceBlock>
+
+
+
+        <move element="product.info.sku" destination="product.top.info" before="-"/>
+        <move element="product.info.brand" destination="product.top.info" before="-"/>
+
+        <move element="product.info.price" destination="product.info.left" after="product.info.sku"/>
+
+        <move element="product.info.overview" destination="product.info.left" after="product.info.price"/>
+
+        <move element="product.info.stock.sku" destination="product.info.left" after="product.info.overview"/>
+
+        <move element="product.info" destination="product.bottom.info" before="-"/>
+
+        <move element="product.info.social" destination="product.bottom.info" after="-"/>
+        <move element="product.bottom.info" destination="product.info.left" after="product.info.stock.sku"/>
+
+
+
+
+        <referenceBlock name="product.info.review" remove="true"/>
+    </body>
+</page>

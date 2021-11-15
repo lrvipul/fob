@@ -1,0 +1,66 @@
+<?php
+/**
+ * @category    FishPig
+ * @package     FishPig_WordPress
+ * @author      Ben Tideswell <help@fishpig.co.uk>
+ */
+?>
+<?php $posts = $this->getPosts() ?>
+<?php if (count($posts) > 0): ?>
+	<div class="block block-blog block-recent-posts">
+		<?php if ($title = $this->getTitle()): ?>
+			<div class="custom-heading">
+				<h2><?php echo __($title) ?></h2>
+			</div>
+		<?php endif; ?>
+		<div class="block-content">
+			<div id="<?php echo $this->getListId() ?>" class="blog-items owl-carousel owl-theme">
+			<?php foreach($posts as $post): ?>
+				<div class="blog-item item">
+					<?php if ($featuredImage = $post->getFeaturedImage()): ?>
+						<div class="featured-image">
+							<a href="<?php echo "blog/".$post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><img src="<?php echo $featuredImage->getFullsizeImage() ?>" alt="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"/></a>
+						</div>
+					<?php endif; ?>
+					<div class="post-date">
+						<?php 
+							$dat= $post->getPostDate();
+							$postDate  = date('j', strtotime($dat));
+							$postMonth  = date('M', strtotime($dat));
+						?>
+						<span><?php echo $postDate; ?><br><?php echo $postMonth; ?></span>
+					</div>
+					<?php $limit = 50;
+						$apostContent = $post->getPostContent();
+						if(str_word_count($apostContent, 0) > $limit) {
+							$words = str_word_count($apostContent, 2);
+							$pos = array_keys($words);
+							$apostContent = substr($apostContent, 0, $pos[$limit]) . '...';
+						}
+					?>
+					<div class="blog-deatils">
+						<a href="<?php echo "blog/".$post->getPermalink() ?>" title="<?php echo $this->escapeHtml($post->getPostTitle()) ?>"><?php echo $this->escapeHtml($post->getPostTitle()) ?></a>
+						<div class="blog-discription">
+							<?php echo $apostContent; ?>
+						</div>
+					</div>
+				</div>
+			<?php endforeach; ?>
+			</div>
+		</div>
+	</div>
+<?php endif; ?>
+<script type="text/javascript">
+	require(['jquery','Codazon_ProductFilter/owlcarousel/owl.carousel.min','domReady!'],function($){
+	        var owl2 = $('.block-content .owl-carousel');
+	        if(owl2.length)
+	        {   
+	            owl2.owlCarousel(
+	            	{
+	            		items:1,
+	            		dots:true,
+	            		singleItem:true
+	            	});         
+	        }
+	    });
+</script> 

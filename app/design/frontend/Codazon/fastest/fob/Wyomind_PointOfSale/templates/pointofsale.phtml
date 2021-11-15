@@ -1,0 +1,147 @@
+<?php if ($this->getRequest()->getModuleName() != "pickupatstore") :
+    $helper = $this->helper('Wyomind\PointOfSale\Helper\Data');
+    echo $helper->getGoogleMapsApiScript();
+endif; ?>
+<div id="pointofsale_box">
+    <div id="map_canvas_pointofsale"
+         class='hide-400 <?php echo ($block->getData('canSelectPreferredStore')) ? "canSelectPreferredStore" : ""; ?>'></div>
+    <div id="pointofsale" class="alone">
+        <div id="title">
+            <?php echo __('All our store locations'); ?>
+            <?php $countries = $block->getCountries(); ?>
+            <?php if (count($countries) > 1) : ?>
+                <div id="country_selection">
+                    <?php echo __('Select a country :'); ?>
+                    <select id="country_place">
+                        <option value="*">
+                            <?php echo __('All countries'); ?>
+                        </option>
+                        <?php foreach ($countries as $country): ?>
+                            <option value="<?php echo $country['code']; ?>">
+                                <?php echo $country['name']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div id="pointofsale_scroll">
+            <?php $handlingFee = $block->getPosHelper()->getHandlingFee(); ?>
+            <?php foreach ($block->getPointofsale() as $place) : ?>
+                <div class="place <?php echo $place->getCountryCode(); ?>">
+                    <h3>
+                        <a href="javascript:void(0)" class="go-to-place"
+                           id="<?php echo $place->getPlaceId(); ?>"><?php echo $place->getName(); ?>
+                            <span class="label"><?php echo __('Preferred store'); ?></span>
+                            <?php if ($block->isPickupAtStore()) : ?>
+                                <?php if ($place->getPosHandlingFee() == 1 && $place->getPickupFee() > 0) : ?>
+                                    <span style="font-size:0.8em">(+ <?php echo $block->getCurrencySymbol() . $place->getPickupFee(); ?>
+                                        )</span>
+                                <?php elseif ($handlingFee > 0): ?>
+                                    <span style="font-size:0.8em">(+ <?php echo $block->getCurrencySymbol() . $handlingFee; ?>
+                                        )</span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <span class="distance distance_<?php echo $place->getPlaceId(); ?>"></span>
+                            <?php if (!$block->getData('canSelectPreferredStore') && $place->getData('available') !== null): ?>
+                                <?php if ($place->getData('available') == 2): ?>
+                                    <span class="pos-backorder"><?php echo __($place->getStockStatusMessageBackorder() != "" ? $place->getStockStatusMessageBackorder() : "Backorder"); ?></span>
+                                <?php elseif (in_array($place->getData('available'), [3, 4])): ?>
+                                    <span class="pos-in-stock"><?php echo __($place->getStockStatusMessage() != "" ? $place->getStockStatusMessage() : "In stock"); ?></span>
+                                <?php else : ?>
+                                    <span class="pos-out-of-stock"><?php echo __($place->getStockStatusMessageOutOfStock() != "" ? $place->getStockStatusMessageOutOfStock() : "Out of Stock"); ?></span>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </a>
+                    </h3>
+                    <div id="place_<?php echo $place->getPlaceId(); ?>" class="details" style="display:none">
+
+                        <?php if ($place->getStoreLocatorDescriptionUseGlobal()): ?>
+                            <?php echo $block->getPosHelper()->getStoreDescription($place); ?>
+                        <?php else: ?>
+                            <?php echo $block->getStoreLocatorStoreDescription($place); ?>
+                        <?php endif; ?>
+
+                        <?php if ($block->getData('canSelectPreferredStore')): ?>
+                            <span class="tools-buttons">
+                            <a href="#" class="choose_preferred_store"
+                               id="preferred_store_<?php echo $place->getPlaceId(); ?>">Choose this store</a>
+                            </span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<div id="dirRendererBlock">
+    <div id="direction_title">
+        <h3><?php echo __('Your directions') ?></h3>
+        <span><a id="close_btn" class="render_tool" href="javascript:void(0)"><?php echo __('Close') ?></a></span> |
+        <span><a class="render_tool" href="javascript:print()"><?php echo __('Print') ?></a>  </span>
+    </div>
+    <div id="directions"></div>
+</div>
+<script>
+    require(['jquery', 'pointofsale'], function ($, pointofsale) {
+        'use strict';
+        pointofsale.W_GP = {
+            strings: {
+                getDirections: '<?php echo __("Get Directions"); ?>',
+                showOnGoogleMap: '<?php echo __("Show on Google Map"); ?>',
+                from: '<?php echo __("From"); ?>',
+                noStoreLocated: '<?php echo __("No store located"); ?>',
+                youAreHere: '<?php echo __("You are here"); ?>',
+                theClosestStoreIs: '<?php echo __("The nearest store is"); ?>',
+                myPreferredStoreIs: '<?php echo __("Your preferred store is"); ?>',
+                myPreferredStore: '<?php echo __("Your preferred store"); ?>',
+                noResultFound: '<?php echo __("No result found."); ?>',
+                unableToFindYourLocation: '<?php echo __("Unable to find your location"); ?>',
+                distanceCalculationFailed: '<?php echo __("Distance calculation failed"); ?>',
+                showMyLocation: '<?php echo __("show my location"); ?>',
+                changeMyLocation: '<?php echo __("change my location"); ?>',
+                yourLocation: '<?php echo __("Your location"); ?>',
+                findMe: '<?php echo __("Find me"); ?>',
+                enterYourLocation: '<?php echo __("Enter your location (city, address, zipcode...)"); ?>',
+                setANewLocation: '<?php echo __("Set a new location"); ?>',
+                youDirections: '<?php echo __("Your directions"); ?>',
+                close: '<?php echo __("Close"); ?>',
+                print: '<?php echo __("Print"); ?>',
+                searchingYourLocation: '<?php echo __("Searching your location"); ?>',
+                allOurStoreLocations: '<?php echo __("All our store locations"); ?>',
+                selectACountry: '<?php echo __("Select a country"); ?>',
+                allCountries: '<?php echo __("All countries"); ?>',
+                selectStore: '<?php echo __("Choose this store"); ?>'
+            },
+            myAddress: null
+        };
+
+        pointofsale.nbStoresToDisplay = "<?php echo $block->getNbStoresToDisplay(); ?>";
+        pointofsale.places = <?php echo $block->getJsonData(); ?>;
+        
+        pointofsale.displayDistance = "<?php echo $block->getDisplayDistance(); ?>";
+        pointofsale.displayDuration = "<?php echo $block->getDisplayDuration(); ?>";
+        pointofsale.unitSystem = "<?php echo $block->getUnitSystem(); ?>";
+
+        pointofsale.initialize();
+
+        $(document).on("store_selected_pas", function (evt, id) {
+            pointofsale.displayStore(pointofsale.getStoreIndexById(id));
+        });
+
+        $(document).on("click", ".go-to-place", function () {
+            pointofsale.displayStore(pointofsale.getStoreIndexById($(this).attr('id')));
+        });
+
+        $(document).on("change", "#country_place", function () {
+            pointofsale.updateList();
+        });
+
+        $(document).on('click', '#close_btn', function () {
+            pointofsale.closeDirection();
+        });
+        $(document).on('preferred-store-selected', function (evt, index) {
+            pointofsale.displayStore(index);
+        });
+    });
+</script>
